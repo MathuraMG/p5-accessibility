@@ -6,7 +6,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "contributors": ["MathuraMG","lmhyphenn", "CleezyITP"],
+  "contributors": [
+    "MathuraMG",
+    "lmhyphenn",
+    "CleezyITP"
+  ],
   "bugs": "https://github.com/processing/p5.accessibility/issues",
   "license": "ISC",
   "dependencies": {
