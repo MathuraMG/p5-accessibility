@@ -2,7 +2,7 @@ function calculateColor(hsv) {
     let colortext;
     if (hsv[0] != 0) {
         hsv[0] = Math.round(hsv[0] * 100);
-        let hue = hsv[0].toString().split('');
+        hue = hsv[0].toString().split('');
         let last = hue.length - 1;
         hue[last] = parseInt(hue[last]);
         if (hue[last] < 2.5) {
@@ -14,11 +14,15 @@ function calculateColor(hsv) {
             hue[0] = parseInt(hue[0]);
             if (hue[last] >= 7.5) {
                 hue[last] = 0;
-                hue[0] += 1;
+                hue[0] = hue[0] + 1;
             }
             hsv[0] = (hue[0] * 10) + hue[1];
         } else {
-            hsv[0] = hue[last] >= 7.5 ? 10 : hue[last];
+            if (hue[last] >= 7.5) {
+                hsv[0] = 10;
+            } else {
+                hsv[0] = hue[last];
+            }
         }
     }
     for (let i = hsv.length - 1; i >= 1; i--) {
@@ -34,18 +38,18 @@ function calculateColor(hsv) {
         for (let i = oghsv.length - 1; i >= 0; i--) {
             oghsv[i] = Math.round(oghsv[i] * 10000) / 10000;
         }
-        for (let xp of xcp) {
-            if ((xp.h == oghsv[0]) && (xp.s == oghsv[1]) && (xp.b == oghsv[2])) {
-                colortext = xp.name;
+        for (let e = 0; e < xcp.length; e++) {
+            if ((xcp[e].h == oghsv[0]) && (xcp[e].s == oghsv[1]) && (xcp[e].b == oghsv[2])) {
+                colortext = xcp[e].name;
                 break;
             } else {
                 colortext = "white";
             }
         }
     } else {
-        for (let cl of color_lookup) {
-            if ((cl["h"] == hsv[0]) && (cl["s"] == hsv[1]) && (cl["b"] == hsv[2])) {
-                colortext = cl.name;
+        for (let i = 0; i < color_lookup.length; i++) {
+            if ((color_lookup[i]["h"] == hsv[0]) && (color_lookup[i]["s"] == hsv[1]) && (color_lookup[i]["b"] == hsv[2])) {
+                colortext = color_lookup[i].name;
                 break;
             }
         }
@@ -54,10 +58,10 @@ function calculateColor(hsv) {
 }
 
 function hexToHsv(value) {
-    const r = parseInt(value[0] + value[1], 16);
-    const g = parseInt(value[2] + value[3], 16);
-    const b = parseInt(value[4] + value[5], 16);
-    const hsv = rgbToHsv(r, g, b);
+    let r = parseInt(value[0] + value[1], 16);
+    let g = parseInt(value[2] + value[3], 16);
+    let b = parseInt(value[4] + value[5], 16);
+    let hsv = rgbToHsv(r, g, b);
     return hsv;
 }
 
@@ -85,12 +89,13 @@ function rgbToHsv(r, g, b) {
         h /= 6;
     }
     oghsv = [h, s, v];
-    return oghsv;
+    return [h, s, v];
 }
 
 function rgbColorName(r, g, b) {
     if (0 <= r && r <= 255 && 0 <= g && g <= 255 && 0 <= b && b <= 255) {
-        return calculateColor(rgbToHsv(r, g, b));
+        let colorname = calculateColor(rgbToHsv(r, g, b));
+        return colorname;
     } else {
         return ("Requires a valid rgb value");
     }
@@ -98,9 +103,10 @@ function rgbColorName(r, g, b) {
 }
 
 function hexColorName(value) {
-    const regEx = /[0-9A-Fa-f]{6}/g;
+    let regEx = /[0-9A-Fa-f]{6}/g;
     if (regEx.test(value) && value.length == 6) {
-        return calculateColor(hexToHsv(value));
+        let colorname = calculateColor(hexToHsv(value));
+        return colorname;
     } else {
         return ("Requires a valid hex value");
     }
@@ -108,7 +114,7 @@ function hexColorName(value) {
 
 let oghsv;
 
-const xcp = [{
+let xcp = [{
         "h": 0,
         "s": 0,
         "b": 0.8275,
@@ -134,7 +140,7 @@ const xcp = [{
     },
 ];
 
-const color_lookup = [{
+let color_lookup = [{
         "h": 0,
         "s": 0,
         "b": 0,

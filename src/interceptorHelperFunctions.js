@@ -1,7 +1,7 @@
 String.prototype.paddingLeft = paddingValue => String(paddingValue + this).slice(-paddingValue.length);
 
 function mergeObjRecursive(obj1, obj2) {
-    var obj3 = {};
+    let obj3 = {};
     for (p in obj1) {
         obj3[p] = obj1[p];
     }
@@ -22,7 +22,7 @@ if (Array.prototype.equals)
         if (this.length != array.length)
             return false;
 
-        for (var i = 0, l = this.length; i < l; i++) {
+        for (let i = 0, l = this.length; i < l; i++) {
             // Check if we have nested arrays
             if (this[i] instanceof Array && array[i] instanceof Array) {
                 // recurse into the nested arrays
