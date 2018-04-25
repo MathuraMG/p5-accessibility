@@ -1,21 +1,21 @@
-function BackgroundEntity(Interceptor,object,arguments, canvasX, canvasY) {
-  var self = this;
-  var passedArguments = arguments;
-  this.populate = function(Interceptor) {
-    if(passedArguments[0].name == 'p5.Color') {
-      passedArguments = passedArguments[0].levels;
+function BackgroundEntity(Interceptor, object, arguments, canvasX, canvasY) {
+    let self = this;
+    let passedArguments = arguments;
+    this.populate = function(Interceptor) {
+        if (passedArguments[0].name == 'p5.Color') {
+            passedArguments = passedArguments[0].levels;
+        }
+        Interceptor.bgColor = Interceptor.getColorName(passedArguments)['color'] + Interceptor.getColorName(passedArguments)['rgb'];
     }
-    Interceptor.bgColor = Interceptor.getColorName(passedArguments)['color'] + Interceptor.getColorName(passedArguments)['rgb'];
-  }
 
-  this.populate(Interceptor);
+    this.populate(Interceptor);
 }
 BackgroundEntity.handledNames = [
-  'background'
+    'background'
 ]
 
 BackgroundEntity.handles = function(name) {
-  return (this.handledNames.indexOf(name) >= 0);
+    return (this.handledNames.indexOf(name) >= 0);
 }
 
 BackgroundEntity.isParameter = true;

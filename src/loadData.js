@@ -1,10 +1,10 @@
-// var allData;
+// let allData;
 // function fetchJSONFile(path, callback) {
-//     var httpRequest = new XMLHttpRequest();
+//     let httpRequest = new XMLHttpRequest();
 //     httpRequest.onreadystatechange = function() {
 //         if (httpRequest.readyState === 4) {
 //             if (httpRequest.status === 200) {
-//                 var data = JSON.parse(httpRequest.responseText);
+//                 let data = JSON.parse(httpRequest.responseText);
 //                 if (callback) callback(data);
 //             }
 //         }
