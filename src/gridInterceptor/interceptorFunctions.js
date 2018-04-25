@@ -9,7 +9,7 @@ function gridInterceptor() {
 
 gridInterceptor.prototype = Object.create(baseInterceptor.prototype);
 
-gridInterceptor.prototype.clearletiables = function(object) {
+gridInterceptor.prototype.clearVariables = object => {
     object.objectTypeCount = {};
     object.objectArray = [];
     object.objectCount = 0;
