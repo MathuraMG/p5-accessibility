@@ -1,83 +1,72 @@
-function BaseEntity(Interceptor, object, arguments, canvasX, canvasY) {
-    this.type = Interceptor.currentColor + ' ' + object.name,
-        this.location = '',
-        this.coordinates = '',
-        this.isMember = function() {
-
-        }
-
-    this.getAttributes = function() {
+class BaseEntity {
+    constructor(Interceptor, object, arguments, canvasX, canvasY) {
+        this.type = `${Interceptor.currentColor} ${object.name}`;
+        this.location = '';
+        this.coordinates = '';
+    }
+    getAttributes() {
         return ({
             type: this.type,
             location: this.location,
             coordinates: this.coordinates
-        })
-    };
-
-    this.getLocation = function(object, arguments, canvasX, canvasY) { // eslint-disable-line
-        let xCoord, yCoord;
-        arguments = [].slice.call(arguments);
-        let i = 0;
-        let that = this;
-        that.coordinates = '';
-
-        arguments.forEach(function(argument) {
-            a = argument;
-            if (object.params[i].description.indexOf('x-coordinate') > -1) {
-                xCoord = a;
-                that.coordinates += a + 'x,';
-            } else if (object.params[i].description.indexOf('y-coordinate') > -1) {
-                yCoord = a;
-                that.coordinates += a + 'y';
-            }
-            i++;
         });
+    }
+    getLocation(object, arguments, canvasX, canvasY) {
+            let xCoord, yCoord;
+            arguments = [].slice.call(arguments);
+            let that = this;
+            that.coordinates = '';
 
-        if (xCoord < 0.4 * canvasX) {
-            if (yCoord < 0.4 * canvasY) {
-                return 'top left';
-            } else if (yCoord > 0.6 * canvasY) {
-                return 'bottom left';
-            } else {
-                return 'mid left';
+            for (const [i, argument] of arguments) {
+                if (object.params[i].description.indexOf('x-coordinate') > -1) {
+                    xCoord = argument;
+                    that.coordinates += `${a}x,`;
+                } else if (object.params[i].description.indexOf('y-coordinate') > -1) {
+                    yCoord = argument;
+                    that.coordinates += `${a}y`;
+                }
             }
-        } else if (xCoord > 0.6 * canvasX) {
-            if (yCoord < 0.4 * canvasY) {
-                return 'top right';
-            } else if (yCoord > 0.6 * canvasY) {
-                return 'bottom right';
+
+            if (xCoord < 0.4 * canvasX) {
+                if (yCoord < 0.4 * canvasY) {
+                    return 'top left';
+                } else if (yCoord > 0.6 * canvasY) {
+                    return 'bottom left';
+                } else {
+                    return 'mid left';
+                }
+            } else if (xCoord > 0.6 * canvasX) {
+                if (yCoord < 0.4 * canvasY) {
+                    return 'top right';
+                } else if (yCoord > 0.6 * canvasY) {
+                    return 'bottom right';
+                } else {
+                    return 'mid right';
+                }
             } else {
-                return 'mid right';
-            }
-        } else {
-            if (yCoord < 0.4 * canvasY) {
-                return 'top middle';
-            } else if (yCoord > 0.6 * canvasY) {
-                return 'bottom middle';
-            } else {
-                return 'middle';
+                if (yCoord < 0.4 * canvasY) {
+                    return 'top middle';
+                } else if (yCoord > 0.6 * canvasY) {
+                    return 'bottom middle';
+                } else {
+                    return 'middle';
+                }
             }
         }
-    }
-
-    /* return which part of the canvas an object os present */
-    this.canvasLocator = function(object, arguments, canvasX, canvasY) {
+        /* return which part of the canvas an object os present */
+    canvasLocator(object, arguments, canvasX, canvasY) {
         let xCoord, yCoord;
         let noRows = 10,
             noCols = 10;
         let locX, locY;
-        let i = 0;
         arguments = [].slice.call(arguments);
-        arguments.forEach(function(argument) {
-            a = argument;
-
+        for (const [i, argument] of arguments) {
             if (object.params[i].description.indexOf('x-coordinate') > -1) {
-                xCoord = a;
+                xCoord = argument;
             } else if (object.params[i].description.indexOf('y-coordinate') > -1) {
-                yCoord = a;
+                yCoord = argument;
             }
-            i++;
-        });
+        }
 
         locX = Math.floor((xCoord / canvasX) * noRows);
         locY = Math.floor((yCoord / canvasY) * noCols);
@@ -88,10 +77,9 @@ function BaseEntity(Interceptor, object, arguments, canvasX, canvasY) {
             locY = locY - 1;
         }
         return ({
-            locX: locX,
-            locY: locY
+            locX,
+            locY
         });
     }
 }
-
 BaseEntity.isParameter = false;
