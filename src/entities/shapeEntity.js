@@ -1,5 +1,5 @@
 function ShapeEntity(Interceptor, shapeObject, arguments, canvasX, canvasY) {
-    var self = this;
+    let self = this;
     BaseEntity.call(self, shapeObject, arguments, canvasX, canvasY);
     this.areaAbs = 0;
     this.type = Interceptor.currentColor + ' ' + shapeObject.name;
@@ -28,7 +28,7 @@ function ShapeEntity(Interceptor, shapeObject, arguments, canvasX, canvasY) {
             // area of full ellipse = PI * horizontal radius * vertical radius.
             // therefore, area of arc = difference bet. arc's start and end radians * horizontal radius * vertical radius.
             // the below expression is adjusted for negative values and differences in arc's start and end radians over PI*2  
-            var arcSizeInRadians = ((((arguments[5] - arguments[4]) % (PI * 2)) + (PI * 2)) % (PI * 2));
+            let arcSizeInRadians = ((((arguments[5] - arguments[4]) % (PI * 2)) + (PI * 2)) % (PI * 2));
             objectArea = arcSizeInRadians * arguments[2] * arguments[3] / 8;
             if (arguments[6] === 'open' || arguments[6] === 'chord') {
                 // when the arc's mode is OPEN or CHORD, we need to account for the area of the triangle that is formed to close the arc

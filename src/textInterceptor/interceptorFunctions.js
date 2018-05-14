@@ -1,10 +1,10 @@
 function textInterceptor() { // eslint-disable-line
-    var self = this;
+    let self = this;
     baseInterceptor.call(self);
 }
 textInterceptor.prototype = Object.create(baseInterceptor.prototype);
 
-textInterceptor.prototype.clearVariables = function(object) {
+textInterceptor.prototype.clearletiables = function(object) {
     object.objectTypeCount = {};
     object.objectArray = [];
     object.objectCount = 0;
@@ -24,7 +24,7 @@ textInterceptor.prototype.populateObject = function(x, arguments, object, table,
         }
     }
 
-    var entityClass = Registry.entityFor(x.name);
+    let entityClass = Registry.entityFor(x.name);
 
     if (entityClass && !entityClass.isParameter) {
         objectArray[objectCount] = new entityClass(this, x, arguments, this.canvasDetails.width, this.canvasDetails.height);
@@ -48,21 +48,21 @@ textInterceptor.prototype.populateObject = function(x, arguments, object, table,
 textInterceptor.prototype.populateTable = function(table, objectArray) {
     if (this.totalCount < 100) {
         if (this.prevTotalCount > this.totalCount) {
-            for (var j = 0; j < this.totalCount; j++) {
-                var row = table.children[j];
-                var tempCol = row.children.length;
-                var properties = Object.keys(objectArray[j].getAttributes());
+            for (let j = 0; j < this.totalCount; j++) {
+                let row = table.children[j];
+                let tempCol = row.children.length;
+                let properties = Object.keys(objectArray[j].getAttributes());
 
                 if (tempCol < properties.length) { // ie - there are more cols now
-                    for (var i = 0; i < tempCol; i++) {
+                    for (let i = 0; i < tempCol; i++) {
                         if (properties[i].localeCompare('type')) {
                             row.children[i].innerHTML = properties[i] + ' = ' + objectArray[j][properties[i]];
                         } else {
                             row.children[i].innerHTML = objectArray[j][properties[i]];
                         }
                     }
-                    for (var i = tempCol; i < properties.length; i++) {
-                        var col = document.createElement('td');
+                    for (let i = tempCol; i < properties.length; i++) {
+                        let col = document.createElement('td');
                         if (properties[i].localeCompare('type')) {
                             col.children[i].innerHTML = properties[i] + ' = ' + objectArray[j][properties[i]];
                         } else {
@@ -72,39 +72,39 @@ textInterceptor.prototype.populateTable = function(table, objectArray) {
                         row.appendChild(col);
                     }
                 } else { // ie - there are fewer cols now
-                    for (var i = 0; i < properties.length; i++) {
+                    for (let i = 0; i < properties.length; i++) {
                         if (properties[i].localeCompare('type')) {
                             row.children[i].innerHTML = properties[i] + ' = ' + objectArray[j][properties[i]];
                         } else {
                             row.children[i].innerHTML = objectArray[j][properties[i]];
                         }
                     }
-                    for (var i = properties.length; i < tempCol; i++) {
-                        var tempCol = row.children[i];
+                    for (let i = properties.length; i < tempCol; i++) {
+                        let tempCol = row.children[i];
                         row.removeChild(tempCol);
                     }
                 }
             }
-            for (var j = this.totalCount; j < this.prevTotalCount; j++) {
-                var tempRow = table.children[this.totalCount];
+            for (let j = this.totalCount; j < this.prevTotalCount; j++) {
+                let tempRow = table.children[this.totalCount];
                 table.removeChild(tempRow);
             }
         } else if (this.prevTotalCount <= this.totalCount) {
-            for (var j = 0; j < this.prevTotalCount; j++) {
-                var row = table.children[j];
-                var tempCol = row.children.length;
-                var properties = Object.keys(objectArray[j].getAttributes());
+            for (let j = 0; j < this.prevTotalCount; j++) {
+                let row = table.children[j];
+                let tempCol = row.children.length;
+                let properties = Object.keys(objectArray[j].getAttributes());
 
                 if (tempCol < properties.length) { // ie - there are more cols now
-                    for (var i = 0; i <= tempCol; i++) {
+                    for (let i = 0; i <= tempCol; i++) {
                         if (properties[i].localeCompare('type')) {
                             row.children[i].innerHTML = properties[i] + ' = ' + objectArray[j][properties[i]];
                         } else {
                             row.children[i].innerHTML = objectArray[j][properties[i]];
                         }
                     }
-                    for (var i = tempCol; i < properties.length; i++) {
-                        var col = document.createElement('td');
+                    for (let i = tempCol; i < properties.length; i++) {
+                        let col = document.createElement('td');
 
                         if (properties[i].localeCompare('type')) {
                             col.innerHTML = properties[i] + ' = ' + objectArray[j][properties[i]];
@@ -114,25 +114,25 @@ textInterceptor.prototype.populateTable = function(table, objectArray) {
                         row.appendChild(col);
                     }
                 } else { // ie - there are fewer cols now
-                    for (var i = 0; i < properties.length; i++) {
+                    for (let i = 0; i < properties.length; i++) {
                         if (properties[i].localeCompare('type')) {
                             row.children[i].innerHTML = properties[i] + ' = ' + objectArray[j][properties[i]];
                         } else {
                             row.children[i].innerHTML = objectArray[j][properties[i]];
                         }
                     }
-                    for (var i = properties.length; i < tempCol; i++) {
-                        var tempCol = row.children[i];
+                    for (let i = properties.length; i < tempCol; i++) {
+                        let tempCol = row.children[i];
                         row.removeChild(tempCol);
                     }
                 }
             }
-            for (var j = this.prevTotalCount; j < this.totalCount; j++) {
-                var row = document.createElement('tr');
+            for (let j = this.prevTotalCount; j < this.totalCount; j++) {
+                let row = document.createElement('tr');
                 row.id = 'object' + j;
-                var properties = Object.keys(objectArray[j].getAttributes());
-                for (var i = 0; i < properties.length; i++) {
-                    var col = document.createElement('td');
+                let properties = Object.keys(objectArray[j].getAttributes());
+                for (let i = 0; i < properties.length; i++) {
+                    let col = document.createElement('td');
                     if (properties[i].localeCompare('type')) {
                         col.innerHTML = properties[i] + ' = ' + objectArray[j][properties[i]];
                     } else {
@@ -147,64 +147,65 @@ textInterceptor.prototype.populateTable = function(table, objectArray) {
 }
 
 textInterceptor.prototype.getSummary = function(object1, object2, element) {
-    this.prevTotalCount = this.totalCount;
-    this.totalCount = object1.objectCount + object2.objectCount;
-    element.innerHTML = '';
-    element.innerHTML +=
-        'Your output is a ' +
-        this.canvasDetails.width +
-        ' by ' +
-        this.canvasDetails.height +
-        ' ' +
-        this.bgColor +
-        ' canvas ' +
-        ' containing the following ';
-    if (this.totalCount > 1) {
-        element.innerHTML += this.totalCount + ' objects : ';
-    } else {
-        element.innerHTML += this.totalCount + ' object : ';
-    }
+        this.prevTotalCount = this.totalCount;
+        this.totalCount = object1.objectCount + object2.objectCount;
+        element.innerHTML = '';
+        element.innerHTML +=
+            'Your output is a ' +
+            this.canvasDetails.width +
+            ' by ' +
+            this.canvasDetails.height +
+            ' ' +
+            this.bgColor +
+            ' canvas ' +
+            ' containing the following ';
+        if (this.totalCount > 1) {
+            element.innerHTML += this.totalCount + ' objects : ';
+        } else {
+            element.innerHTML += this.totalCount + ' object : ';
+        }
 
-    if (object2.objectCount > 0 || object1.objectCount > 0) {
+        if (object2.objectCount > 0 || object1.objectCount > 0) {
 
-        var objectList = document.createElement('ul');
+            let objectList = document.createElement('ul');
 
-        if (this.totalCount < 100) {
+            if (this.totalCount < 100) {
 
-            object1.objectArray.forEach(function(objArrayItem, i) {
-                var objectListItem = document.createElement('li');
-                objectList.appendChild(objectListItem);
-                var objLink = document.createElement('a');
-                objLink.href = '#object' + i;
-                objLink.target = '_self';
-                objLink.innerHTML = objArrayItem['type'];
-                objectListItem.appendChild(objLink);
-                objectListItem.innerHTML +=
-                    ' at ' +
-                    objArrayItem['location'] +
-                    ' covering ' +
-                    objArrayItem['area'] +
-                    ' of the canvas';
-            });
+                object1.objectArray.forEach(function(objArrayItem, i) {
+                    let objectListItem = document.createElement('li');
+                    objectList.appendChild(objectListItem);
+                    let objLink = document.createElement('a');
+                    objLink.href = '#object' + i;
+                    objLink.target = '_self';
+                    objLink.innerHTML = objArrayItem['type'];
+                    objectListItem.appendChild(objLink);
+                    objectListItem.innerHTML +=
+                        ' at ' +
+                        objArrayItem['location'] +
+                        ' covering ' +
+                        objArrayItem['area'] +
+                        ' of the canvas';
+                });
 
-            object2.objectArray.forEach(function(objArrayItem, i) {
-                var objectListItem = document.createElement('li');
-                objectList.appendChild(objectListItem);
-                var objLink = document.createElement('a');
-                objLink.href = '#object' + (i + object1.objectArray.length);
-                objLink.target = '_self';
-                objLink.innerHTML = objArrayItem['type'];
-                objectListItem.appendChild(objLink);
-                objectListItem.innerHTML +=
-                    ' at ' +
-                    objArrayItem['location'] +
-                    ' covering ' +
-                    objArrayItem['area'] +
-                    ' of the canvas';
-            });
-            element.appendChild(objectList);
+                object2.objectArray.forEach(function(objArrayItem, i) {
+                    let objectListItem = document.createElement('li');
+                    objectList.appendChild(objectListItem);
+                    let objLink = document.createElement('a');
+                    objLink.href = '#object' + (i + object1.objectArray.length);
+                    objLink.target = '_self';
+                    objLink.innerHTML = objArrayItem['type'];
+                    objectListItem.appendChild(objLink);
+                    objectListItem.innerHTML +=
+                        ' at ' +
+                        objArrayItem['location'] +
+                        ' covering ' +
+                        objArrayItem['area'] +
+                        ' of the canvas';
+                });
+                element.appendChild(objectList);
+            }
         }
     }
-}
-
-var textInterceptor = new textInterceptor();
+    /*
+    const textInterceptor = new textInterceptor();
+    */

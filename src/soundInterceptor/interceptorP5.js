@@ -1,17 +1,13 @@
-var baseFreq = 440;
-var currLogFreq, currVol, currPan;
+let baseFreq = 440;
+let currLogFreq, currVol, currPan;
 
 // initialise parameters
-var movingObjectCount = 0;
-var currFrame = 2;
-var movingObjects = [];
+let movingObjectCount = 0;
+let currFrame = 2;
+let movingObjects = [];
 
 funcNames = allData['classitems'].map(function(x) {
-    if (x['overloads']) {
-        tempParam = x['overloads'][0]['params'];
-    } else {
-        tempParam = x['params'];
-    }
+    const tempParam = x['overloads'] ? x['overloads'][0]['params'] : x['params'];
     return {
         name: x['name'],
         params: tempParam,
@@ -22,26 +18,25 @@ funcNames = allData['classitems'].map(function(x) {
 });
 
 // create web audio api context
-var audioCtx = new(window.AudioContext || window.webkitAudioContext)();
+let audioCtx = new(window.AudioContext || window.webkitAudioContext)();
 
 // create Oscillator node
-var oscillatorNodes = [];
-var gainNodes = [];
-var panNodes = [];
+let oscillatorNodes = [];
+let gainNodes = [];
+let panNodes = [];
 
 funcNames = funcNames.filter(function(x) {
-    var className = x['class'];
-    return (x['name'] && x['params'] && (className === 'p5'));
+    return (x['name'] && x['params'] && (x['class'] === 'p5'));
 });
 
 if (document.getElementById('soundOutput-content')) {
     funcNames.forEach(function(x) {
-        var i = 0;
-        var originalFunc = p5.prototype[x.name];
+        let i = 0;
+        let originalFunc = p5.prototype[x.name];
         p5.prototype[x.name] = function() {
             orgArg = arguments;
 
-            if (frameCount == 1 && (x.module.localeCompare('Shape') === 0)) {
+            if (frameCount === 1 && (x.module.localeCompare('Shape') === 0)) {
                 i = 0;
                 x.params.forEach(function(param) {
                     if (param.description.indexOf('x-coordinate') > -1) {
@@ -54,7 +49,7 @@ if (document.getElementById('soundOutput-content')) {
                     }
                     i++;
                 });
-            } else if (frameCount > 1 && (frameCount % 1 == 0) && (x.module.localeCompare('Shape') === 0)) {
+            } else if (frameCount > 1 && (frameCount % 1 === 0) && (x.module.localeCompare('Shape') === 0)) {
 
                 // Pull out only the shapes in draw()
                 if (frameCount !== currFrame) {

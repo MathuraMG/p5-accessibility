@@ -1,15 +1,15 @@
 class TextEntity {
-    constructor(Interceptor, shapeObject, arguments, canvasX, canvasY) {
+    constructor(Interceptor, shapeObject, argumentss, canvasX, canvasY) {
         const self = this;
-        BaseEntity.call(self, shapeObject, arguments, canvasX, canvasY);
-        this.type = `${String(arguments[0]).substring(0, 20)}(${Interceptor.currentColor})`;
-        this.populate(shapeObject, arguments, canvasX, canvasY);
+        BaseEntity.call(self, shapeObject, argumentss, canvasX, canvasY);
+        this.type = `${String(argumentss[0]).substring(0, 20)}(${Interceptor.currentColor})`;
+        this.populate(shapeObject, argumentss, canvasX, canvasY);
         this.handledNames = ['text'];
         this.isParameter = false;
     }
-    populate(shapeObject, arguments, canvasX, canvasY) {
-        this.location = this.getLocation(shapeObject, arguments, canvasX, canvasY);
-        this.coordLoc = this.canvasLocator(shapeObject, arguments, canvasX, canvasY);
+    populate(shapeObject, argumentss, canvasX, canvasY) {
+        this.location = this.getLocation(shapeObject, argumentss, canvasX, canvasY);
+        this.coordLoc = this.canvasLocator(shapeObject, argumentss, canvasX, canvasY);
     }
     getAttributes() {
         return ({

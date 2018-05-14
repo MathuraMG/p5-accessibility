@@ -1,85 +1,85 @@
 function getElementById(id) {
-  return document.getElementById(id);
+    return document.getElementById(id);
 }
 
 function createElement(tag) {
-  return document.createElement(tag);
+    return document.createElement(tag);
 }
 
 function createTextStructure() {
-  let textOutput = getElementById('textOutput-content');
-  let heading = createElement('h1');
-  let contentSummary = createElement('p');
-  let contentTable = createElement('table');
-  let contentDetails = createElement('p');
+    let textOutput = getElementById('textOutput-content');
+    let heading = createElement('h1');
+    let contentSummary = createElement('p');
+    let contentTable = createElement('table');
+    let contentDetails = createElement('p');
 
-  textOutput.style.position = 'absolute';
-  textOutput.style.left = '-1000px';
-  textOutput.style.top = 'auto';
-  textOutput.style.width = '1px';
-  textOutput.style.height = '1px';
-  textOutput.style.overflow = 'hidden';
+    textOutput.style.position = 'absolute';
+    textOutput.style.left = '-1000px';
+    textOutput.style.top = 'auto';
+    textOutput.style.width = '1px';
+    textOutput.style.height = '1px';
+    textOutput.style.overflow = 'hidden';
 
-  textOutput.appendChild(heading);
-  textOutput.appendChild(contentSummary);
-  textOutput.appendChild(contentTable);
-  textOutput.appendChild(contentDetails);
+    textOutput.appendChild(heading);
+    textOutput.appendChild(contentSummary);
+    textOutput.appendChild(contentTable);
+    textOutput.appendChild(contentDetails);
 
-  heading.innerHTML = 'Text Output';
+    heading.innerHTML = 'Text Output';
 
-  contentSummary.setAttribute('id', 'textOutput-content-summary');
-  contentSummary.setAttribute('tabIndex', '0');
-  contentSummary.setAttribute('aria-label', 'text output summary');
-  contentSummary.setAttribute('role', 'main');
+    contentSummary.setAttribute('id', 'textOutput-content-summary');
+    contentSummary.setAttribute('tabIndex', '0');
+    contentSummary.setAttribute('aria-label', 'text output summary');
+    contentSummary.setAttribute('role', 'main');
 
-  contentTable.setAttribute('id', 'textOutput-content-table');
-  contentTable.setAttribute('summary', 'text output details');
+    contentTable.setAttribute('id', 'textOutput-content-table');
+    contentTable.setAttribute('summary', 'text output details');
 
-  contentDetails.setAttribute('id', 'textOutput-content-details');
-  contentDetails.setAttribute('tabIndex', '0');
-  contentDetails.setAttribute('aria-label', 'text output details');
-  contentDetails.setAttribute('role', 'main');
+    contentDetails.setAttribute('id', 'textOutput-content-details');
+    contentDetails.setAttribute('tabIndex', '0');
+    contentDetails.setAttribute('aria-label', 'text output details');
+    contentDetails.setAttribute('role', 'main');
 }
 
 function createTableStructure() {
-  let tableOutput = getElementById('tableOutput-content');
-  let heading = createElement('h1');
-  let contentSummary = createElement('p');
-  let contentTable = createElement('table');
-  let contentDetails = createElement('div');
+    let tableOutput = getElementById('tableOutput-content');
+    let heading = createElement('h1');
+    let contentSummary = createElement('p');
+    let contentTable = createElement('table');
+    let contentDetails = createElement('div');
 
-  tableOutput.style.position = 'absolute';
-  tableOutput.style.left = '-1000px';
-  tableOutput.style.top = 'auto';
-  tableOutput.style.width = '1px';
-  tableOutput.style.height = '1px';
-  tableOutput.style.overflow = 'hidden';
+    tableOutput.style.position = 'absolute';
+    tableOutput.style.left = '-1000px';
+    tableOutput.style.top = 'auto';
+    tableOutput.style.width = '1px';
+    tableOutput.style.height = '1px';
+    tableOutput.style.overflow = 'hidden';
 
-  tableOutput.appendChild(heading);
-  tableOutput.appendChild(contentSummary);
-  tableOutput.appendChild(contentTable);
-  tableOutput.appendChild(contentDetails);
+    tableOutput.appendChild(heading);
+    tableOutput.appendChild(contentSummary);
+    tableOutput.appendChild(contentTable);
+    tableOutput.appendChild(contentDetails);
 
-  heading.innerHTML = 'Table Output';
+    heading.innerHTML = 'Table Output';
 
-  contentSummary.setAttribute('id', 'tableOutput-content-summary');
-  contentSummary.setAttribute('tabIndex', '0');
-  contentSummary.setAttribute('aria-label', 'table text output summary');
-  contentSummary.setAttribute('role', 'main');
+    contentSummary.setAttribute('id', 'tableOutput-content-summary');
+    contentSummary.setAttribute('tabIndex', '0');
+    contentSummary.setAttribute('aria-label', 'table text output summary');
+    contentSummary.setAttribute('role', 'main');
 
-  contentTable.setAttribute('id', 'tableOutput-content-table');
-  contentTable.setAttribute('summary', 'table output details');
+    contentTable.setAttribute('id', 'tableOutput-content-table');
+    contentTable.setAttribute('summary', 'table output details');
 
-  contentDetails.setAttribute('id', 'tableOutput-content-details');
-  contentDetails.setAttribute('tabIndex', '0');
-  contentDetails.setAttribute('aria-label', 'table output elements');
-  contentDetails.setAttribute('role', 'main');
+    contentDetails.setAttribute('id', 'tableOutput-content-details');
+    contentDetails.setAttribute('tabIndex', '0');
+    contentDetails.setAttribute('aria-label', 'table output elements');
+    contentDetails.setAttribute('role', 'main');
 }
 
 if (getElementById('textOutput-content')) {
-  createTextStructure();
+    createTextStructure();
 }
 
 if (getElementById('tableOutput-content')) {
-  createTableStructure();
+    createTableStructure();
 }

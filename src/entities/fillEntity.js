@@ -1,7 +1,7 @@
 class FillEntity {
-    constructor(Interceptor, shapeObject, arguments, canvasX, canvasY) {
+    constructor(Interceptor, shapeObject, argumentss, canvasX, canvasY) {
         this.self = this;
-        this.passedArguments = arguments;
+        this.passedArguments = argumentss;
         this.populate(Interceptor);
         this.handledNames = ['fill'];
         this.isParameter = true;

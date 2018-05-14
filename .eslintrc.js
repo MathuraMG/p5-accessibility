@@ -8,7 +8,7 @@ module.exports = {
     plugins: ['prettier'],
     rules: {
         'prettier/prettier': [
-            'error',
+            'warn',
             {
                 singleQuote: true
             }
@@ -30,6 +30,7 @@ module.exports = {
         'no-empty': ['error', {
             allowEmptyCatch: true
         }],
-        'no-console': 'off'
+        'no-console': 'off',
+        'no-var': 'error'
     }
 };
