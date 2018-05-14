@@ -7,7 +7,6 @@ function createElement(tag) {
 }
 
 function createTextStructure() {
-
   let textOutput = getElementById('textOutput-content');
   let heading = createElement('h1');
   let contentSummary = createElement('p');
@@ -30,21 +29,19 @@ function createTextStructure() {
 
   contentSummary.setAttribute('id', 'textOutput-content-summary');
   contentSummary.setAttribute('tabIndex', '0');
-  contentSummary.setAttribute('aria-label','text output summary')
-  contentSummary.setAttribute('role','main');
+  contentSummary.setAttribute('aria-label', 'text output summary');
+  contentSummary.setAttribute('role', 'main');
 
   contentTable.setAttribute('id', 'textOutput-content-table');
-  contentTable.setAttribute('summary','text output details');
+  contentTable.setAttribute('summary', 'text output details');
 
   contentDetails.setAttribute('id', 'textOutput-content-details');
   contentDetails.setAttribute('tabIndex', '0');
-  contentDetails.setAttribute('aria-label','text output details');
-  contentDetails.setAttribute('role','main');
-
+  contentDetails.setAttribute('aria-label', 'text output details');
+  contentDetails.setAttribute('role', 'main');
 }
 
 function createTableStructure() {
-
   let tableOutput = getElementById('tableOutput-content');
   let heading = createElement('h1');
   let contentSummary = createElement('p');
@@ -67,22 +64,22 @@ function createTableStructure() {
 
   contentSummary.setAttribute('id', 'tableOutput-content-summary');
   contentSummary.setAttribute('tabIndex', '0');
-  contentSummary.setAttribute('aria-label','table text output summary')
-  contentSummary.setAttribute('role','main');
+  contentSummary.setAttribute('aria-label', 'table text output summary');
+  contentSummary.setAttribute('role', 'main');
 
   contentTable.setAttribute('id', 'tableOutput-content-table');
-  contentTable.setAttribute('summary','table output details');
+  contentTable.setAttribute('summary', 'table output details');
 
   contentDetails.setAttribute('id', 'tableOutput-content-details');
   contentDetails.setAttribute('tabIndex', '0');
-  contentDetails.setAttribute('aria-label','table output elements');
-  contentDetails.setAttribute('role','main');
+  contentDetails.setAttribute('aria-label', 'table output elements');
+  contentDetails.setAttribute('role', 'main');
 }
 
-if(getElementById('textOutput-content')){
+if (getElementById('textOutput-content')) {
   createTextStructure();
 }
 
-if(getElementById('tableOutput-content')){
+if (getElementById('tableOutput-content')) {
   createTableStructure();
 }
