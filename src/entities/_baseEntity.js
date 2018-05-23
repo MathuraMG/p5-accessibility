@@ -18,10 +18,10 @@ function BaseEntity(Interceptor, object, arguments, canvasX, canvasY) {
         let xCoord, yCoord;
         arguments = [].slice.call(arguments);
         let i = 0;
-        let that = this;
+        const that = this;
         that.coordinates = ``;
 
-        arguments.forEach(function(argument) {
+        arguments.forEach((argument) => {
             const a = argument;
             if (object.params[i].description.indexOf(`x-coordinate`) > -1) {
                 xCoord = a;
@@ -63,12 +63,12 @@ function BaseEntity(Interceptor, object, arguments, canvasX, canvasY) {
     /* return which part of the canvas an object os present */
     this.canvasLocator = function(object, arguments, canvasX, canvasY) {
         let xCoord, yCoord;
-        let noRows = 10,
+        const noRows = 10,
             noCols = 10;
         let locX, locY;
         let i = 0;
         arguments = [].slice.call(arguments);
-        arguments.forEach(function(argument) {
+        arguments.forEach((argument) => {
             const a = argument;
 
             if (object.params[i].description.indexOf(`x-coordinate`) > -1) {
@@ -88,8 +88,8 @@ function BaseEntity(Interceptor, object, arguments, canvasX, canvasY) {
             locY = locY - 1;
         }
         return ({
-            locX: locX,
-            locY: locY
+            locX,
+            locY
         });
     }
 }

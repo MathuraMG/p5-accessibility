@@ -3,7 +3,7 @@ function calculateColor(hsv) {
     if (hsv[0] !== 0) {
         hsv[0] = Math.round(hsv[0] * 100);
         hue = hsv[0].toString().split(``);
-        let last = hue.length - 1;
+        const last = hue.length - 1;
         hue[last] = parseInt(hue[last]);
         if (hue[last] < 2.5) {
             hue[last] = 0;
@@ -48,7 +48,7 @@ function calculateColor(hsv) {
         }
     } else {
         for (let i = 0; i < color_lookup.length; i++) {
-            if ((color_lookup[i][`h`] === hsv[0]) && (color_lookup[i][`s`] === hsv[1]) && (color_lookup[i][`b`] === hsv[2])) {
+            if ((color_lookup[i].h === hsv[0]) && (color_lookup[i].s === hsv[1]) && (color_lookup[i].b === hsv[2])) {
                 colortext = color_lookup[i].name;
                 break;
             }
@@ -58,20 +58,21 @@ function calculateColor(hsv) {
 }
 
 function hexToHsv(value) {
-    let r = parseInt(value[0] + value[1], 16);
-    let g = parseInt(value[2] + value[3], 16);
-    let b = parseInt(value[4] + value[5], 16);
-    let hsv = rgbToHsv(r, g, b);
+    const r = parseInt(value[0] + value[1], 16);
+    const g = parseInt(value[2] + value[3], 16);
+    const b = parseInt(value[4] + value[5], 16);
+    const hsv = rgbToHsv(r, g, b);
     return hsv;
 }
 
 function rgbToHsv(r, g, b) {
     r /= 255, g /= 255, b /= 255;
-    let max = Math.max(r, g, b),
-        min = Math.min(r, g, b);
-    let h, s, v = max;
-    let d = max - min;
-    s = max === 0 ? 0 : d / max;
+    const max = Math.max(r, g, b),
+        min = Math.min(r, g, b),
+        v = max,
+        d = max - min,
+        s = max === 0 ? 0 : d / max;
+    let h;
     if (max === min) {
         h = 0; // achromatic
     } else {
@@ -94,7 +95,7 @@ function rgbToHsv(r, g, b) {
 
 function rgbColorName(r, g, b) {
     if (0 <= r && r <= 255 && 0 <= g && g <= 255 && 0 <= b && b <= 255) {
-        let colorname = calculateColor(rgbToHsv(r, g, b));
+        const colorname = calculateColor(rgbToHsv(r, g, b));
         return colorname;
     } else {
         return (`Requires a valid rgb value`);
@@ -103,9 +104,9 @@ function rgbColorName(r, g, b) {
 }
 
 function hexColorName(value) {
-    let regEx = /[0-9A-Fa-f]{6}/g;
+    const regEx = /[0-9A-Fa-f]{6}/g;
     if (regEx.test(value) && value.length === 6) {
-        let colorname = calculateColor(hexToHsv(value));
+        const colorname = calculateColor(hexToHsv(value));
         return colorname;
     } else {
         return (`Requires a valid hex value`);
@@ -114,7 +115,7 @@ function hexColorName(value) {
 
 let oghsv;
 
-let xcp = [{
+const xcp = [{
         "h": 0,
         "s": 0,
         "b": 0.8275,
@@ -140,7 +141,7 @@ let xcp = [{
     },
 ];
 
-let color_lookup = [{
+const color_lookup = [{
         "h": 0,
         "s": 0,
         "b": 0,

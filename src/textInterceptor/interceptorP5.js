@@ -1,38 +1,38 @@
 /* global funcNames */
 /* global allData */
-funcNames = allData[`classitems`].map(function(x) {
-    if (x[`overloads`]) {
+funcNames = allData.classitems.map((x) => {
+    if (x.overloads) {
         /* global tempParam */
-        tempParam = x[`overloads`][0][`params`];
+        tempParam = x.overloads[0].params;
     } else {
-        tempParam = x[`params`];
+        tempParam = x.params;
     }
     return {
-        name: x[`name`],
+        name: x.name,
         params: tempParam,
         class: x[`class`],
-        module: x[`module`],
-        submodule: x[`submodule`]
+        module: x.module,
+        submodule: x.submodule
     };
 });
 
-funcNames = funcNames.filter(function(x) {
-    let className = x[`class`];
-    return (x[`name`] && x[`params`] && (className === `p5`));
+funcNames = funcNames.filter((x) => {
+    const className = x[`class`];
+    return (x.name && x.params && (className === `p5`));
 });
 
 if (document.getElementById(`textOutput-content`)) {
-    funcNames.forEach(function(x) {
+    funcNames.forEach((x) => {
         // var document = parent.document;
         /* global p5 */
-        let originalFunc = p5.prototype[x.name];
-        let byID = function(id) {
-            let element = document.getElementById(id);
+        const originalFunc = p5.prototype[x.name];
+        const byID = function(id) {
+            const element = document.getElementById(id);
             return element;
         };
-        let details = byID(`textOutput-content-details`);
-        let summary = byID(`textOutput-content-summary`);
-        let table = byID(`textOutput-content-table`);
+        const details = byID(`textOutput-content-details`);
+        const summary = byID(`textOutput-content-summary`);
+        const table = byID(`textOutput-content-table`);
         p5.prototype[x.name] = function() {
             /* global orgArg */
             orgArg = arguments;

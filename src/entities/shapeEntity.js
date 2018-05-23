@@ -1,5 +1,5 @@
 function ShapeEntity(Interceptor, shapeObject, arguments, canvasX, canvasY) {
-    let self = this;
+    const self = this;
     /* global BaseEntity */
     BaseEntity.call(self, shapeObject, arguments, canvasX, canvasY);
     this.areaAbs = 0;
@@ -29,18 +29,18 @@ function ShapeEntity(Interceptor, shapeObject, arguments, canvasX, canvasY) {
             // area of full ellipse = PI * horizontal radius * vertical radius.
             // therefore, area of arc = difference bet. arc's start and end radians * horizontal radius * vertical radius.
             // the below expression is adjusted for negative values and differences in arc's start and end radians over PI*2  
-            let arcSizeInRadians = ((((arguments[5] - arguments[4]) % (PI * 2)) + (PI * 2)) % (PI * 2));
+            const arcSizeInRadians = ((((arguments[5] - arguments[4]) % (PI * 2)) + (PI * 2)) % (PI * 2));
             objectArea = arcSizeInRadians * arguments[2] * arguments[3] / 8;
             if (arguments[6] === `open` || arguments[6] === `chord`) {
                 // when the arc's mode is OPEN or CHORD, we need to account for the area of the triangle that is formed to close the arc
                 // (Ax( By −	Cy) +	Bx(Cy −	Ay) +	Cx(Ay −	By ) )/2
-                let Ax = arguments[0];
-                let Ay = arguments[1];
-                let Bx = arguments[0] + (arguments[2] / 2) * cos(arguments[4]).toFixed(2);
-                let By = arguments[1] + (arguments[3] / 2) * sin(arguments[4]).toFixed(2);
-                let Cx = arguments[0] + (arguments[2] / 2) * cos(arguments[5]).toFixed(2);
-                let Cy = arguments[1] + (arguments[3] / 2) * sin(arguments[5]).toFixed(2);
-                let areaOfExtraTriangle = abs(Ax * (By - Cy) + Bx * (Cy - Ay) + Cx * (Ay - By)) / 2;
+                const Ax = arguments[0];
+                const Ay = arguments[1];
+                const Bx = arguments[0] + (arguments[2] / 2) * cos(arguments[4]).toFixed(2);
+                const By = arguments[1] + (arguments[3] / 2) * sin(arguments[4]).toFixed(2);
+                const Cx = arguments[0] + (arguments[2] / 2) * cos(arguments[5]).toFixed(2);
+                const Cy = arguments[1] + (arguments[3] / 2) * sin(arguments[5]).toFixed(2);
+                const areaOfExtraTriangle = abs(Ax * (By - Cy) + Bx * (Cy - Ay) + Cx * (Ay - By)) / 2;
                 if (arcSizeInRadians > PI) {
                     objectArea = objectArea + areaOfExtraTriangle;
                 } else {

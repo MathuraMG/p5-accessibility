@@ -8,11 +8,11 @@ function createElement(tag) {
 
 function createTextStructure() {
 
-    let textOutput = getElementById(`textOutput-content`);
-    let heading = createElement(`h1`);
-    let contentSummary = createElement(`p`);
-    let contentTable = createElement(`table`);
-    let contentDetails = createElement(`p`);
+    const textOutput = getElementById(`textOutput-content`);
+    const heading = createElement(`h1`);
+    const contentSummary = createElement(`p`);
+    const contentTable = createElement(`table`);
+    const contentDetails = createElement(`p`);
 
     textOutput.style.position = `absolute`;
     textOutput.style.left = `-1000px`;
@@ -45,11 +45,11 @@ function createTextStructure() {
 
 function createTableStructure() {
 
-    let tableOutput = getElementById(`tableOutput-content`);
-    let heading = createElement(`h1`);
-    let contentSummary = createElement(`p`);
-    let contentTable = createElement(`table`);
-    let contentDetails = createElement(`div`);
+    const tableOutput = getElementById(`tableOutput-content`);
+    const heading = createElement(`h1`);
+    const contentSummary = createElement(`p`);
+    const contentTable = createElement(`table`);
+    const contentDetails = createElement(`div`);
 
     tableOutput.style.position = `absolute`;
     tableOutput.style.left = `-1000px`;

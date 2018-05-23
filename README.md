@@ -13,7 +13,7 @@ The library creates 3 outputs:
 
 3) **Sound Output** - This mode explains the movement of the objects present in the canvas. Top to Down movement is represented by a decrease in frequency and left to right through panning.
 
-To learn more about the project please read the following Medium articles: [P5 accessibility](https://medium.com/processing-foundation/p5-accessibility-115d84535fa8) and [Making p5.js Accessible](https://medium.com/processing-foundation/making-p5-js-accessible-e2ce366e05a0).
+To learn more about the project read this [article](https://medium.com/processing-foundation/p5-accessibility-115d84535fa8).
 
 If you have found a bug in the p5-accessibility.js library, you can file it here under the [“issues”](https://github.com/processing/p5.accessibility/issues) tab. 
 

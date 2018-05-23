@@ -1,6 +1,6 @@
 var shadowDOMElement; // eslint-disable-line
 function GridInterceptor() {
-    let self = this;
+    const self = this;
     /* global baseInterceptor */
     baseInterceptor.call(self);
     this.noRows = 10,
@@ -19,12 +19,12 @@ GridInterceptor.prototype.clearVariables = function(object) {
 }
 
 GridInterceptor.prototype.createShadowDOMElement = function(document) {
-    let contentTable = document.getElementById(`tableOutput-content-table`);
+    const contentTable = document.getElementById(`tableOutput-content-table`);
     for (let i = 0; i < this.noRows; i++) {
-        let row = document.createElement(`tr`);
+        const row = document.createElement(`tr`);
 
         for (let j = 0; j < this.noCols; j++) {
-            let col = document.createElement(`td`);
+            const col = document.createElement(`td`);
             col.className = `gridOutput-cell-content`;
             col.innerHTML = `test`;
             row.appendChild(col);
@@ -48,7 +48,7 @@ GridInterceptor.prototype.populateObject = function(x, arguments, object, table,
         }
     }
     /* global Registry */
-    let entityClass = Registry.entityFor(x.name);
+    const entityClass = Registry.entityFor(x.name);
 
     if (entityClass && !entityClass.isParameter) {
         objectArray[objectCount] = new entityClass(this, x, arguments, this.canvasDetails.width, this.canvasDetails.height);
@@ -63,22 +63,22 @@ GridInterceptor.prototype.populateObject = function(x, arguments, object, table,
         new entityClass(this, x, arguments, this.canvasDetails.width, this.canvasDetails.height);
     }
     return ({
-        objectCount: objectCount,
-        objectArray: objectArray,
-        objectTypeCount: objectTypeCount
+        objectCount,
+        objectArray,
+        objectTypeCount
     });
 }
 
 GridInterceptor.prototype.populateTable = function(objectArray, documentPassed) {
     if (this.totalCount < 100) {
-        let that = this;
+        const that = this;
         objectArray = [].slice.call(objectArray);
-        objectArray.forEach(function(object, i) {
-            let cellLoc = object.coordLoc.locY * that.noRows + object.coordLoc.locX;
+        objectArray.forEach((object, i) => {
+            const cellLoc = object.coordLoc.locY * that.noRows + object.coordLoc.locX;
             // add link in table
-            let cellLink = documentPassed.createElement(`a`);
+            const cellLink = documentPassed.createElement(`a`);
             cellLink.innerHTML += object.type;
-            let objectId = `#object` + i;
+            const objectId = `#object` + i;
             cellLink.setAttribute(`href`, objectId);
             if (object.coordLoc.locY < that.noCols && object.coordLoc.locX < that.noRows && object.coordLoc.locY > 0 && object.coordLoc.locX > 0) {
                 documentPassed.getElementsByClassName(`gridOutput-cell-content`)[cellLoc].appendChild(cellLink);
@@ -106,20 +106,20 @@ GridInterceptor.prototype.populateObjectDetails = function(object1, object2, ele
         /* global totObjectTypeCount */
         /* global mergeObjRecursive */
         totObjectTypeCount = mergeObjRecursive(object1.objectTypeCount, object2.objectTypeCount);
-        let keys = Object.keys(totObjectTypeCount);
-        keys.forEach(function(key) {
+        const keys = Object.keys(totObjectTypeCount);
+        keys.forEach((key) => {
             elementSummary.innerHTML += totObjectTypeCount[key] + ` ` + key + ` `;
         });
 
-        let objectList = document.createElement(`ul`);
+        const objectList = document.createElement(`ul`);
 
         if (this.totalCount < 100) {
-            object1.objectArray.forEach(function(objArrayItem, i) {
-                let objectListItem = document.createElement(`li`);
+            object1.objectArray.forEach((objArrayItem, i) => {
+                const objectListItem = document.createElement(`li`);
                 objectListItem.id = `object` + i;
                 objectList.appendChild(objectListItem);
-                let objKeys = Object.keys(objArrayItem.getAttributes());
-                objKeys.forEach(function(objKeyItem) {
+                const objKeys = Object.keys(objArrayItem.getAttributes());
+                objKeys.forEach((objKeyItem) => {
                     if (objKeyItem.localeCompare(`coordLoc`)) {
                         if (objKeyItem.localeCompare(`type`)) {
                             objectListItem.innerHTML += objKeyItem + ` = ` + objArrayItem[objKeyItem] + ` `;
@@ -129,12 +129,12 @@ GridInterceptor.prototype.populateObjectDetails = function(object1, object2, ele
                     }
                 });
             });
-            object2.objectArray.forEach(function(objArrayItem, i) {
-                let objectListItem = document.createElement(`li`);
+            object2.objectArray.forEach((objArrayItem, i) => {
+                const objectListItem = document.createElement(`li`);
                 objectListItem.id = `object` + (object1.objectArray.length + i);
                 objectList.appendChild(objectListItem);
-                let objKeys = Object.keys(objArrayItem.getAttributes());
-                objKeys.forEach(function(objKeyItem) {
+                const objKeys = Object.keys(objArrayItem.getAttributes());
+                objKeys.forEach((objKeyItem) => {
                     if (objKeyItem.localeCompare(`coordLoc`)) {
                         if (objKeyItem.localeCompare(`type`)) {
                             objectListItem.innerHTML += objKeyItem + ` = ` + objArrayItem[objKeyItem] + ` `;

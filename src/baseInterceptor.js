@@ -29,45 +29,45 @@ baseInterceptor.prototype.getColorName = function(arguments) {
     } else if (arguments.length === 3) {
         return (getRGBname(arguments));
     } else if (arguments.length === 2) {
-        let trans = Math.round(100 - ((arguments[1] * 100) / 255));
+        const trans = Math.round(100 - ((arguments[1] * 100) / 255));
         // assuming that we are doing RGB - this would be a grayscale number
         if (arguments[0] < 10) {
-            let rgb = `(0, 0, 0)`;
+            const rgb = `(0, 0, 0)`;
             if (trans === 0) {
                 return ({
                     'color': `black`,
-                    'rgb': rgb
+                    rgb
                 });
             } else {
                 return ({
                     'color': `black with ` + trans + `% tranparency`,
-                    'rgb': rgb
+                    rgb
                 });
             }
         } else if (arguments[0] > 240) {
-            let rgb = `(255, 255, 255)`;
+            const rgb = `(255, 255, 255)`;
             if (trans === 0) {
                 return ({
                     'color': `white`,
-                    'rgb': rgb
+                    rgb
                 });
             } else {
                 return ({
                     'color': `white with ` + trans + `% tranparency`,
-                    'rgb': rgb
+                    rgb
                 });
             }
         } else {
-            let rgb = `(` + Math.round(arguments[0]) + `, ` + Math.round(arguments[0]) + `, ` + Math.round(arguments[0]) + `)`;
+            const rgb = `(` + Math.round(arguments[0]) + `, ` + Math.round(arguments[0]) + `, ` + Math.round(arguments[0]) + `)`;
             if (trans === 0) {
                 return ({
                     'color': `gray`,
-                    'rgb': rgb
+                    rgb
                 });
             } else {
                 return ({
                     'color': `gray with ` + trans + `% tranparency`,
-                    'rgb': rgb
+                    rgb
                 });
             }
         }
@@ -75,22 +75,22 @@ baseInterceptor.prototype.getColorName = function(arguments) {
         if (!(typeof(arguments[0])).localeCompare(`number`)) {
             // assuming that we are doing RGB - this would be a grayscale number
             if (arguments[0] < 10) {
-                let rgb = `(0, 0, 0)`;
+                const rgb = `(0, 0, 0)`;
                 return ({
                     'color': `black`,
-                    'rgb': rgb
+                    rgb
                 });
             } else if (arguments[0] > 240) {
-                let rgb = `(255, 255, 255)`;
+                const rgb = `(255, 255, 255)`;
                 return ({
                     'color': `white`,
-                    'rgb': rgb
+                    rgb
                 });
             } else {
-                let rgb = `(` + arguments[0] + `, ` + arguments[0] + `, ` + arguments[0] + `)`;
+                const rgb = `(` + arguments[0] + `, ` + arguments[0] + `, ` + arguments[0] + `)`;
                 return ({
                     'color': `grey`,
-                    'rgb': rgb
+                    rgb
                 });
             }
         } else if (!(typeof(arguments[0])).localeCompare(`string`)) {
@@ -111,47 +111,47 @@ baseInterceptor.prototype.getColorName = function(arguments) {
 }
 
 function getRGBAname(arguments) {
-    let trans = Math.round(100 - ((arguments[3] * 100)));
+    const trans = Math.round(100 - ((arguments[3] * 100)));
     /* global rgbColorName */
-    let colorName = rgbColorName(arguments[0], arguments[1], arguments[2]);
-    let rgb = `(` + Math.round(arguments[0]) + `, ` + Math.round(arguments[1]) + `, ` + Math.round(arguments[2]) + `)`;
+    const colorName = rgbColorName(arguments[0], arguments[1], arguments[2]);
+    const rgb = `(` + Math.round(arguments[0]) + `, ` + Math.round(arguments[1]) + `, ` + Math.round(arguments[2]) + `)`;
     if (trans > 0) {
         return ({
             'color': colorName + ` with ` + trans + `% tranparency`,
-            'rgb': rgb
+            rgb
         });
     } else {
         return ({
             'color': colorName,
-            'rgb': rgb
+            rgb
         });
     }
 }
 
 function getRGBname(arguments) {
-    let colorName = rgbColorName(arguments[0], arguments[1], arguments[2]);
-    let rgb = `(` + Math.round(arguments[0]) + `, ` + Math.round(arguments[1]) + `, ` + Math.round(arguments[2]) + `)`;
+    const colorName = rgbColorName(arguments[0], arguments[1], arguments[2]);
+    const rgb = `(` + Math.round(arguments[0]) + `, ` + Math.round(arguments[1]) + `, ` + Math.round(arguments[2]) + `)`;
     return ({
         'color': colorName,
-        'rgb': rgb
+        rgb
     });
 }
 
 function getHexname(arguments) {
     let hex = arguments[0].slice(1);
     if ((arguments[0].match(/\w/g)).length === 3) { //3digithex
-        let h3x = hex.match(/\w/g)
+        const h3x = hex.match(/\w/g)
         hex = [h3x[0], h3x[0], h3x[1], h3x[1], h3x[2], h3x[2]].join(``);
     }
     /* global hexColorName */
-    let colorName = hexColorName(hex);
-    let r = parseInt(hex[1] + hex[2], 16);
-    let g = parseInt(hex[3] + hex[4], 16);
-    let b = parseInt(hex[5] + hex[6], 16);
-    let rgb = `(` + r + `, ` + g + `, ` + b + `)`;
+    const colorName = hexColorName(hex);
+    const r = parseInt(hex[1] + hex[2], 16);
+    const g = parseInt(hex[3] + hex[4], 16);
+    const b = parseInt(hex[5] + hex[6], 16);
+    const rgb = `(` + r + `, ` + g + `, ` + b + `)`;
     return ({
         'color': colorName,
-        'rgb': rgb
+        rgb
     });
 }
 
@@ -187,7 +187,7 @@ function RGBAString(arguments) {
         } else if (((arguments[0].match(/%/g)).length) === 3) {
             //when arguments[0] is 'rgba(10%,100%,30%,0.5)'
             //This line creates an array with the values in order the following order ["R","G","B","A"]. The RegEx looks for three values with percentages and one value without percentage.   
-            let values = (((arguments[0].match(/(\(\s*?((000|0?\d{1,2}|1\d\d|2[0-4]\d|25[0-5])|(000(?:\.+\d*)|0?\d{1,2}(?:\.+\d*)|1\d\d(?:\.+\d*)|2[0-4]\d(?:\.+\d*)|25[0-5](?:\.+\d*)))\s*?%,\s*?((000|0?\d{1,2}|1\d\d|2[0-4]\d|25[0-5])|(000(?:\.+\d*)|0?\d{1,2}(?:\.+\d*)|1\d\d(?:\.+\d*)|2[0-4]\d(?:\.+\d*)|25[0-5](?:\.+\d*)))\s*?%,\s*?((000|0?\d{1,2}|1\d\d|2[0-4]\d|25[0-5])|(000(?:\.+\d*)|0?\d{1,2}(?:\.+\d*)|1\d\d(?:\.+\d*)|2[0-4]\d(?:\.+\d*)|25[0-5](?:\.+\d*)))\s*?%,\s*?((000|0?\d{1,2}|1\d\d|2[0-4]\d|25[0-5])|(000(?:\.+\d*)|0?\d{1,2}(?:\.+\d*)|1\d\d(?:\.+\d*)|2[0-4]\d(?:\.+\d*)|25[0-5](?:\.+\d*)))\s*?\))/g))[0]).replace(/%|\(|\)/g, ``)).split(`,`);
+            const values = (((arguments[0].match(/(\(\s*?((000|0?\d{1,2}|1\d\d|2[0-4]\d|25[0-5])|(000(?:\.+\d*)|0?\d{1,2}(?:\.+\d*)|1\d\d(?:\.+\d*)|2[0-4]\d(?:\.+\d*)|25[0-5](?:\.+\d*)))\s*?%,\s*?((000|0?\d{1,2}|1\d\d|2[0-4]\d|25[0-5])|(000(?:\.+\d*)|0?\d{1,2}(?:\.+\d*)|1\d\d(?:\.+\d*)|2[0-4]\d(?:\.+\d*)|25[0-5](?:\.+\d*)))\s*?%,\s*?((000|0?\d{1,2}|1\d\d|2[0-4]\d|25[0-5])|(000(?:\.+\d*)|0?\d{1,2}(?:\.+\d*)|1\d\d(?:\.+\d*)|2[0-4]\d(?:\.+\d*)|25[0-5](?:\.+\d*)))\s*?%,\s*?((000|0?\d{1,2}|1\d\d|2[0-4]\d|25[0-5])|(000(?:\.+\d*)|0?\d{1,2}(?:\.+\d*)|1\d\d(?:\.+\d*)|2[0-4]\d(?:\.+\d*)|25[0-5](?:\.+\d*)))\s*?\))/g))[0]).replace(/%|\(|\)/g, ``)).split(`,`);
             for (let i = values.length - 2; i >= 0; i--) {
                 if (parseInt(values[i]) < 100) {
                     values[i] = Math.round(parseInt(values[i]) * 2.55);
@@ -198,7 +198,7 @@ function RGBAString(arguments) {
             values[3] = parseFloat(values[3]);
             return (getRGBAname(values));
         } else {
-            let values = [255, 255, 255, 0];
+            const values = [255, 255, 255, 0];
             return (getRGBAname(values));
         }
     } else {
@@ -230,7 +230,7 @@ function RGBString(arguments) {
         if (((arguments[0].match(/%/g)).length) === 3) {
             //when arguments[0] is 'rgb(10%,100%,30%)'
             //This line creates an array with the values in order the following order ["R","G","B"]. The RegEx looks for three values with percentages.   
-            let values = (((arguments[0].match(/(\(\s*?((000|0?\d{1,2}|1\d\d|2[0-4]\d|25[0-5])|(000(?:\.+\d*)|0?\d{1,2}(?:\.+\d*)|1\d\d(?:\.+\d*)|2[0-4]\d(?:\.+\d*)|25[0-5](?:\.+\d*)))\s*?%,\s*?((000|0?\d{1,2}|1\d\d|2[0-4]\d|25[0-5])|(000(?:\.+\d*)|0?\d{1,2}(?:\.+\d*)|1\d\d(?:\.+\d*)|2[0-4]\d(?:\.+\d*)|25[0-5](?:\.+\d*)))\s*?%,\s*?((000|0?\d{1,2}|1\d\d|2[0-4]\d|25[0-5])|(000(?:\.+\d*)|0?\d{1,2}(?:\.+\d*)|1\d\d(?:\.+\d*)|2[0-4]\d(?:\.+\d*)|25[0-5](?:\.+\d*)))\s*?%\s*?\))/g))[0]).replace(/%|\(|\)/g, ``)).split(`,`);
+            const values = (((arguments[0].match(/(\(\s*?((000|0?\d{1,2}|1\d\d|2[0-4]\d|25[0-5])|(000(?:\.+\d*)|0?\d{1,2}(?:\.+\d*)|1\d\d(?:\.+\d*)|2[0-4]\d(?:\.+\d*)|25[0-5](?:\.+\d*)))\s*?%,\s*?((000|0?\d{1,2}|1\d\d|2[0-4]\d|25[0-5])|(000(?:\.+\d*)|0?\d{1,2}(?:\.+\d*)|1\d\d(?:\.+\d*)|2[0-4]\d(?:\.+\d*)|25[0-5](?:\.+\d*)))\s*?%,\s*?((000|0?\d{1,2}|1\d\d|2[0-4]\d|25[0-5])|(000(?:\.+\d*)|0?\d{1,2}(?:\.+\d*)|1\d\d(?:\.+\d*)|2[0-4]\d(?:\.+\d*)|25[0-5](?:\.+\d*)))\s*?%\s*?\))/g))[0]).replace(/%|\(|\)/g, ``)).split(`,`);
             for (let i = values.length - 1; i >= 0; i--) {
                 if (parseInt(values[i]) < 100) {
                     values[i] = Math.round(parseInt(values[i]) * 2.55);
@@ -240,7 +240,7 @@ function RGBString(arguments) {
             }
             return (getRGBname(values));
         } else {
-            let values = [255, 255, 255];
+            const values = [255, 255, 255];
             return (getRGBname(values));
         }
     } else {

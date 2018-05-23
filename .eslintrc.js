@@ -7,9 +7,9 @@ module.exports = {
     extends: ['eslint:recommended', 'p5js'],
     plugins: [],
     rules: {
-        'no-cond-assign': [2, 'except-parens'],
-        eqeqeq: ['error', 'smart'],
-        'no-global-assign': 'off',
+        'no-cond-assign': 2,
+        'eqeqeq': [2, 'smart'],
+        'no-global-assign': 0,
         'no-use-before-define': [
             2,
             {
@@ -17,18 +17,24 @@ module.exports = {
                 variables: false
             }
         ],
-        'new-cap': 0,
         'no-caller': 2,
         'no-undef': 2,
-        'no-unused-vars': ['error', {
-            args: 'none',
-            vars: "local"
+        'no-unused-vars': [2, {
+            args: 'all',
+            vars: 'local'
         }],
-        'no-empty': ['error', {
-            allowEmptyCatch: true
+        'no-empty': 2,
+        'no-console': 0,
+        'no-var': 2,
+        'quotes': [2, 'backtick'],
+        'prefer-arrow-callback': 2,
+        'arrow-body-style': [2, 'as-needed'],
+        'curly': 'error',
+        'dot-notation': [2, {
+            allowKeywords: false
         }],
-        'no-console': 'off',
-        'no-var': 'error',
-        'quotes': ["error", "backtick"],
+        'constructor-super': 2,
+        'object-shorthand': 2,
+        'prefer-const': 2
     }
 };

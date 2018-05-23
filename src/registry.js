@@ -1,12 +1,12 @@
-let Registry = {
+const Registry = {
     registry: [],
-    register: function(entity) {
+    register(entity) {
         this.registry.push(entity);
     },
 
-    entityFor: function(name) {
+    entityFor(name) {
         for (let i = 0; i < this.registry.length; i++) {
-            let entity = this.registry[i];
+            const entity = this.registry[i];
 
             if (entity.handles(name)) {
                 return entity;

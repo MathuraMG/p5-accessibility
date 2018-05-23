@@ -1,53 +1,53 @@
-let baseFreq = 440;
+const baseFreq = 440;
 let currLogFreq, currVol, currPan;
 
 // initialise parameters
 let movingObjectCount = 0;
 let currFrame = 2;
-let movingObjects = [];
+const movingObjects = [];
 /* global funcNames */
 /* global allData */
-funcNames = allData[`classitems`].map(function(x) {
-    if (x[`overloads`]) {
+funcNames = allData.classitems.map((x) => {
+    if (x.overloads) {
         /* global tempParam */
-        tempParam = x[`overloads`][0][`params`];
+        tempParam = x.overloads[0].params;
     } else {
-        tempParam = x[`params`];
+        tempParam = x.params;
     }
     return {
-        name: x[`name`],
+        name: x.name,
         params: tempParam,
         class: x[`class`],
-        module: x[`module`],
-        submodule: x[`submodule`]
+        module: x.module,
+        submodule: x.submodule
     };
 });
 
 // create web audio api context
-let audioCtx = new(window.AudioContext || window.webkitAudioContext)();
+const audioCtx = new(window.AudioContext || window.webkitAudioContext)();
 
 // create Oscillator node
-let oscillatorNodes = [];
-let gainNodes = [];
-let panNodes = [];
+const oscillatorNodes = [];
+const gainNodes = [];
+const panNodes = [];
 
-funcNames = funcNames.filter(function(x) {
-    let className = x[`class`];
-    return (x[`name`] && x[`params`] && (className === `p5`));
+funcNames = funcNames.filter((x) => {
+    const className = x[`class`];
+    return (x.name && x.params && (className === `p5`));
 });
 
 if (document.getElementById(`soundOutput-content`)) {
-    funcNames.forEach(function(x) {
+    funcNames.forEach((x) => {
         let i = 0;
         /* global p5 */
-        let originalFunc = p5.prototype[x.name];
+        const originalFunc = p5.prototype[x.name];
         p5.prototype[x.name] = function() {
             /* global orgArg */
             orgArg = arguments;
 
             if (frameCount === 1 && (x.module.localeCompare(`Shape`) === 0)) {
                 i = 0;
-                x.params.forEach(function(param) {
+                x.params.forEach((param) => {
                     if (param.description.indexOf(`x-coordinate`) > -1) {
                         /* global xPosPrev */
                         xPosPrev = orgArg[i];
@@ -72,7 +72,7 @@ if (document.getElementById(`soundOutput-content`)) {
                 movingObjectCount++;
 
                 if (!oscillatorNodes[movingObjectCount - 1]) {
-                    let index = movingObjectCount - 1;
+                    const index = movingObjectCount - 1;
                     oscillatorNodes[index] = audioCtx.createOscillator();
                     gainNodes[index] = audioCtx.createGain();
                     panNodes[index] = audioCtx.createStereoPanner();
@@ -97,7 +97,7 @@ if (document.getElementById(`soundOutput-content`)) {
                 }
                 // pull out only the x coord values and compare with prev value
                 i = 0;
-                x.params.some(function(param) {
+                x.params.some((param) => {
                     if (param.description.indexOf(`y-coordinate`) > -1) {
                         movingObjects[movingObjectCount - 1].yPosCurr = orgArg[i];
                         movingObjects[movingObjectCount - 1].yPosDiff = movingObjects[movingObjectCount - 1].yPosCurr - movingObjects[movingObjectCount - 1].yPosPrev;
@@ -107,7 +107,7 @@ if (document.getElementById(`soundOutput-content`)) {
                     i++;
                 });
                 i = 0;
-                x.params.some(function(param) {
+                x.params.some((param) => {
                     if (param.description.indexOf(`x-coordinate`) > -1) {
                         movingObjects[movingObjectCount - 1].xPosCurr = orgArg[i];
                         movingObjects[movingObjectCount - 1].xPosDiff = movingObjects[movingObjectCount - 1].xPosCurr - movingObjects[movingObjectCount - 1].xPosPrev;

@@ -4,7 +4,7 @@ function BackgroundEntity(Interceptor, object, arguments, canvasX, canvasY) {
         if (passedArguments[0].name === `p5.Color`) {
             passedArguments = passedArguments[0].levels;
         }
-        Interceptor.bgColor = Interceptor.getColorName(passedArguments)[`color`] + Interceptor.getColorName(passedArguments)[`rgb`];
+        Interceptor.bgColor = Interceptor.getColorName(passedArguments).color + Interceptor.getColorName(passedArguments).rgb;
     }
 
     this.populate(Interceptor);

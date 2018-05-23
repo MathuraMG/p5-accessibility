@@ -1,36 +1,36 @@
 /* global funcNames */
 /* global allData */
-funcNames = allData[`classitems`].map(function(x) {
-    if (x[`overloads`]) {
+funcNames = allData.classitems.map((x) => {
+    if (x.overloads) {
         /* global tempParam */
-        tempParam = x[`overloads`][0][`params`];
+        tempParam = x.overloads[0].params;
     } else {
-        tempParam = x[`params`];
+        tempParam = x.params;
     }
     return {
-        name: x[`name`],
+        name: x.name,
         params: tempParam,
         class: x[`class`],
-        module: x[`module`],
-        submodule: x[`submodule`],
+        module: x.module,
+        submodule: x.submodule,
     };
 });
 
-funcNames = funcNames.filter(function(x) {
-    let className = x[`class`];
-    return (x[`name`] && x[`params`] && (className === `p5`));
+funcNames = funcNames.filter((x) => {
+    const className = x[`class`];
+    return (x.name && x.params && (className === `p5`));
 });
 if (document.getElementById(`tableOutput-content`)) {
-    funcNames.forEach(function(x) {
+    funcNames.forEach((x) => {
         // var document = parent.document;
-        let originalFunc = p5.prototype[x.name];
-        let byID = function(id) {
-            let element = document.getElementById(id);
+        const originalFunc = p5.prototype[x.name];
+        const byID = function(id) {
+            const element = document.getElementById(id);
             return element;
         };
-        let details = byID(`tableOutput-content-details`);
-        let summary = byID(`tableOutput-content-summary`);
-        let table = byID(`tableOutput-content-table`);
+        const details = byID(`tableOutput-content-details`);
+        const summary = byID(`tableOutput-content-summary`);
+        const table = byID(`tableOutput-content-table`);
         /* global p5 */
         p5.prototype[x.name] = function() {
             /* global orgArg */
@@ -54,7 +54,7 @@ if (document.getElementById(`tableOutput-content`)) {
                 //clean the cells
                 let cells = document.getElementsByClassName(`gridOutput-cell-content`);
                 cells = [].slice.call(cells);
-                cells.forEach(function(cell) {
+                cells.forEach((cell) => {
                     cell.innerHTML = ``;
                 });
 
