@@ -2,6 +2,7 @@ function baseInterceptor() {
     this.prevTotalCount = 0,
         this.totalCount = 0,
         this.currentColor = `white`,
+        this.currentEllipseMode = `center`;
         this.bgColor = `white`,
         this.objectArea = 0,
         this.coordinates = [],
@@ -186,7 +187,7 @@ function RGBAString(arguments) {
             return (getRGBAname(values));
         } else if (((arguments[0].match(/%/g)).length) === 3) {
             // when arguments[0] is 'rgba(10%,100%,30%,0.5)'
-            // This line creates an array with the values in order the following order ["R","G","B","A"]. The RegEx looks for three values with percentages and one value without percentage.   
+            // This line creates an array with the values in order the following order ["R","G","B","A"]. The RegEx looks for three values with percentages and one value without percentage.
             const values = (((arguments[0].match(/(\(\s*?((000|0?\d{1,2}|1\d\d|2[0-4]\d|25[0-5])|(000(?:\.+\d*)|0?\d{1,2}(?:\.+\d*)|1\d\d(?:\.+\d*)|2[0-4]\d(?:\.+\d*)|25[0-5](?:\.+\d*)))\s*?%,\s*?((000|0?\d{1,2}|1\d\d|2[0-4]\d|25[0-5])|(000(?:\.+\d*)|0?\d{1,2}(?:\.+\d*)|1\d\d(?:\.+\d*)|2[0-4]\d(?:\.+\d*)|25[0-5](?:\.+\d*)))\s*?%,\s*?((000|0?\d{1,2}|1\d\d|2[0-4]\d|25[0-5])|(000(?:\.+\d*)|0?\d{1,2}(?:\.+\d*)|1\d\d(?:\.+\d*)|2[0-4]\d(?:\.+\d*)|25[0-5](?:\.+\d*)))\s*?%,\s*?((000|0?\d{1,2}|1\d\d|2[0-4]\d|25[0-5])|(000(?:\.+\d*)|0?\d{1,2}(?:\.+\d*)|1\d\d(?:\.+\d*)|2[0-4]\d(?:\.+\d*)|25[0-5](?:\.+\d*)))\s*?\))/g))[0]).replace(/%|\(|\)/g, ``)).split(`,`);
             for (let i = values.length - 2; i >= 0; i--) {
                 if (parseInt(values[i]) < 100) {
@@ -229,7 +230,7 @@ function RGBString(arguments) {
     if (arguments[0].match(/%/)) {
         if (((arguments[0].match(/%/g)).length) === 3) {
             // when arguments[0] is 'rgb(10%,100%,30%)'
-            // This line creates an array with the values in order the following order ["R","G","B"]. The RegEx looks for three values with percentages.   
+            // This line creates an array with the values in order the following order ["R","G","B"]. The RegEx looks for three values with percentages.
             const values = (((arguments[0].match(/(\(\s*?((000|0?\d{1,2}|1\d\d|2[0-4]\d|25[0-5])|(000(?:\.+\d*)|0?\d{1,2}(?:\.+\d*)|1\d\d(?:\.+\d*)|2[0-4]\d(?:\.+\d*)|25[0-5](?:\.+\d*)))\s*?%,\s*?((000|0?\d{1,2}|1\d\d|2[0-4]\d|25[0-5])|(000(?:\.+\d*)|0?\d{1,2}(?:\.+\d*)|1\d\d(?:\.+\d*)|2[0-4]\d(?:\.+\d*)|25[0-5](?:\.+\d*)))\s*?%,\s*?((000|0?\d{1,2}|1\d\d|2[0-4]\d|25[0-5])|(000(?:\.+\d*)|0?\d{1,2}(?:\.+\d*)|1\d\d(?:\.+\d*)|2[0-4]\d(?:\.+\d*)|25[0-5](?:\.+\d*)))\s*?%\s*?\))/g))[0]).replace(/%|\(|\)/g, ``)).split(`,`);
             for (let i = values.length - 1; i >= 0; i--) {
                 if (parseInt(values[i]) < 100) {
@@ -245,7 +246,7 @@ function RGBString(arguments) {
         }
     } else {
         // when arguments[0] is 'rgb(10,100,30)'
-        // This line creates an array with the values in order the following order ["R","G","B"]. Values must be less than 255.  
+        // This line creates an array with the values in order the following order ["R","G","B"]. Values must be less than 255.
         let values = (((arguments[0].match(/(\(\s*?((000|0?\d{1,2}|1\d\d|2[0-4]\d|25[0-5])|(000(?:\.+\d*)|0?\d{1,2}(?:\.+\d*)|1\d\d(?:\.+\d*)|2[0-4]\d(?:\.+\d*)|25[0-5](?:\.+\d*)))\s*?,\s*?((000|0?\d{1,2}|1\d\d|2[0-4]\d|25[0-5])|(000(?:\.+\d*)|0?\d{1,2}(?:\.+\d*)|1\d\d(?:\.+\d*)|2[0-4]\d(?:\.+\d*)|25[0-5](?:\.+\d*)))\s*?,\s*?((000|0?\d{1,2}|1\d\d|2[0-4]\d|25[0-5])|(000(?:\.+\d*)|0?\d{1,2}(?:\.+\d*)|1\d\d(?:\.+\d*)|2[0-4]\d(?:\.+\d*)|25[0-5](?:\.+\d*)))\s*?\))/g))[0]).replace(/(\(|\))/g, ``)).split(`,`);
         values = [parseInt(values[0]), parseInt(values[1]), parseInt(values[2])];
         return (getRGBname(values));

@@ -3,6 +3,7 @@ function ShapeEntity(Interceptor, shapeObject, arguments, canvasX, canvasY) {
     /* global BaseEntity */
     BaseEntity.call(self, shapeObject, arguments, canvasX, canvasY);
     this.areaAbs = 0;
+    this.currentEllipseMode = Interceptor.currentEllipseMode;
     this.type = Interceptor.currentColor + ` ` + shapeObject.name;
     this.area = 0;
 
@@ -28,7 +29,7 @@ function ShapeEntity(Interceptor, shapeObject, arguments, canvasX, canvasY) {
         if (!objectType.localeCompare(`arc`)) {
             // area of full ellipse = PI * horizontal radius * vertical radius.
             // therefore, area of arc = difference bet. arc's start and end radians * horizontal radius * vertical radius.
-            // the below expression is adjusted for negative values and differences in arc's start and end radians over PI*2  
+            // the below expression is adjusted for negative values and differences in arc's start and end radians over PI*2
             const arcSizeInRadians = ((((arguments[5] - arguments[4]) % (PI * 2)) + (PI * 2)) % (PI * 2));
             objectArea = arcSizeInRadians * arguments[2] * arguments[3] / 8;
             if (arguments[6] === `open` || arguments[6] === `chord`) {
@@ -48,7 +49,15 @@ function ShapeEntity(Interceptor, shapeObject, arguments, canvasX, canvasY) {
                 }
             }
         } else if (!objectType.localeCompare(`ellipse`)) {
-            objectArea = 3.14 * arguments[2] * arguments[3] / 4;
+            if(!this.currentEllipseMode.localeCompare('center')) {
+              objectArea = 3.14 * arguments[2] * arguments[3] / 4;
+            } else if(!this.currentEllipseMode.localeCompare('radius')) {
+              objectArea = 3.14 * arguments[2] * arguments[3];
+            } else if(!this.currentEllipseMode.localeCompare('corner')) {
+              objectArea = 3.14 * arguments[2] * arguments[3] / 4;
+            } else if(!this.currentEllipseMode.localeCompare('corners')) {
+              objectArea = 3.14 * abs(arguments[2] - arguments[0]) * (arguments[3] - arguments[1]) / 4;
+            }
         } else if (!objectType.localeCompare(`line`)) {
             objectArea = 0;
         } else if (!objectType.localeCompare(`point`)) {

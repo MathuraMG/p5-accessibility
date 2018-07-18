@@ -875,6 +875,7 @@ Object.defineProperty(Array.prototype, `equals`, {
     this.prevTotalCount = 0,
         this.totalCount = 0,
         this.currentColor = `white`,
+        this.currentEllipseMode = `center`;
         this.bgColor = `white`,
         this.objectArea = 0,
         this.coordinates = [],
@@ -1059,7 +1060,7 @@ function RGBAString(arguments) {
             return (getRGBAname(values));
         } else if (((arguments[0].match(/%/g)).length) === 3) {
             // when arguments[0] is 'rgba(10%,100%,30%,0.5)'
-            // This line creates an array with the values in order the following order ["R","G","B","A"]. The RegEx looks for three values with percentages and one value without percentage.   
+            // This line creates an array with the values in order the following order ["R","G","B","A"]. The RegEx looks for three values with percentages and one value without percentage.
             const values = (((arguments[0].match(/(\(\s*?((000|0?\d{1,2}|1\d\d|2[0-4]\d|25[0-5])|(000(?:\.+\d*)|0?\d{1,2}(?:\.+\d*)|1\d\d(?:\.+\d*)|2[0-4]\d(?:\.+\d*)|25[0-5](?:\.+\d*)))\s*?%,\s*?((000|0?\d{1,2}|1\d\d|2[0-4]\d|25[0-5])|(000(?:\.+\d*)|0?\d{1,2}(?:\.+\d*)|1\d\d(?:\.+\d*)|2[0-4]\d(?:\.+\d*)|25[0-5](?:\.+\d*)))\s*?%,\s*?((000|0?\d{1,2}|1\d\d|2[0-4]\d|25[0-5])|(000(?:\.+\d*)|0?\d{1,2}(?:\.+\d*)|1\d\d(?:\.+\d*)|2[0-4]\d(?:\.+\d*)|25[0-5](?:\.+\d*)))\s*?%,\s*?((000|0?\d{1,2}|1\d\d|2[0-4]\d|25[0-5])|(000(?:\.+\d*)|0?\d{1,2}(?:\.+\d*)|1\d\d(?:\.+\d*)|2[0-4]\d(?:\.+\d*)|25[0-5](?:\.+\d*)))\s*?\))/g))[0]).replace(/%|\(|\)/g, ``)).split(`,`);
             for (let i = values.length - 2; i >= 0; i--) {
                 if (parseInt(values[i]) < 100) {
@@ -1102,7 +1103,7 @@ function RGBString(arguments) {
     if (arguments[0].match(/%/)) {
         if (((arguments[0].match(/%/g)).length) === 3) {
             // when arguments[0] is 'rgb(10%,100%,30%)'
-            // This line creates an array with the values in order the following order ["R","G","B"]. The RegEx looks for three values with percentages.   
+            // This line creates an array with the values in order the following order ["R","G","B"]. The RegEx looks for three values with percentages.
             const values = (((arguments[0].match(/(\(\s*?((000|0?\d{1,2}|1\d\d|2[0-4]\d|25[0-5])|(000(?:\.+\d*)|0?\d{1,2}(?:\.+\d*)|1\d\d(?:\.+\d*)|2[0-4]\d(?:\.+\d*)|25[0-5](?:\.+\d*)))\s*?%,\s*?((000|0?\d{1,2}|1\d\d|2[0-4]\d|25[0-5])|(000(?:\.+\d*)|0?\d{1,2}(?:\.+\d*)|1\d\d(?:\.+\d*)|2[0-4]\d(?:\.+\d*)|25[0-5](?:\.+\d*)))\s*?%,\s*?((000|0?\d{1,2}|1\d\d|2[0-4]\d|25[0-5])|(000(?:\.+\d*)|0?\d{1,2}(?:\.+\d*)|1\d\d(?:\.+\d*)|2[0-4]\d(?:\.+\d*)|25[0-5](?:\.+\d*)))\s*?%\s*?\))/g))[0]).replace(/%|\(|\)/g, ``)).split(`,`);
             for (let i = values.length - 1; i >= 0; i--) {
                 if (parseInt(values[i]) < 100) {
@@ -1118,12 +1119,13 @@ function RGBString(arguments) {
         }
     } else {
         // when arguments[0] is 'rgb(10,100,30)'
-        // This line creates an array with the values in order the following order ["R","G","B"]. Values must be less than 255.  
+        // This line creates an array with the values in order the following order ["R","G","B"]. Values must be less than 255.
         let values = (((arguments[0].match(/(\(\s*?((000|0?\d{1,2}|1\d\d|2[0-4]\d|25[0-5])|(000(?:\.+\d*)|0?\d{1,2}(?:\.+\d*)|1\d\d(?:\.+\d*)|2[0-4]\d(?:\.+\d*)|25[0-5](?:\.+\d*)))\s*?,\s*?((000|0?\d{1,2}|1\d\d|2[0-4]\d|25[0-5])|(000(?:\.+\d*)|0?\d{1,2}(?:\.+\d*)|1\d\d(?:\.+\d*)|2[0-4]\d(?:\.+\d*)|25[0-5](?:\.+\d*)))\s*?,\s*?((000|0?\d{1,2}|1\d\d|2[0-4]\d|25[0-5])|(000(?:\.+\d*)|0?\d{1,2}(?:\.+\d*)|1\d\d(?:\.+\d*)|2[0-4]\d(?:\.+\d*)|25[0-5](?:\.+\d*)))\s*?\))/g))[0]).replace(/(\(|\))/g, ``)).split(`,`);
         values = [parseInt(values[0]), parseInt(values[1]), parseInt(values[2])];
         return (getRGBname(values));
     }
-};function BaseEntity(Interceptor, object) {
+}
+;function BaseEntity(Interceptor, object) {
     this.type = Interceptor.currentColor + ` ` + object.name,
         this.location = ``,
         this.coordinates = ``,
@@ -1241,7 +1243,8 @@ BackgroundEntity.handles = function(name) {
 BackgroundEntity.isParameter = true;
 
 /* global Registry */
-Registry.register(BackgroundEntity);;function FillEntity(Interceptor, shapeObject, arguments, canvasX, canvasY) {
+Registry.register(BackgroundEntity);
+;function FillEntity(Interceptor, shapeObject, arguments, canvasX, canvasY) {
     let passedArguments = arguments;
     this.populate = function(Interceptor) {
         if (passedArguments[0].name === `p5.Color`) {
@@ -1249,7 +1252,6 @@ Registry.register(BackgroundEntity);;function FillEntity(Interceptor, shapeObjec
         }
         Interceptor.currentColor = Interceptor.getColorName(passedArguments).color + Interceptor.getColorName(passedArguments).rgb;
     }
-
     this.populate(Interceptor);
 }
 FillEntity.handledNames = [
@@ -1263,11 +1265,32 @@ FillEntity.handles = function(name) {
 FillEntity.isParameter = true;
 
 /* global Registry */
-Registry.register(FillEntity);;function ShapeEntity(Interceptor, shapeObject, arguments, canvasX, canvasY) {
+Registry.register(FillEntity);
+;function EllipseModeEntity(Interceptor, object, arguments) {
+    let mode = arguments[0];
+    this.populate = function(Interceptor) {
+        Interceptor.currentEllipseMode = mode;
+    }
+    this.populate(Interceptor);
+}
+EllipseModeEntity.handledNames = [
+    `ellipseMode`
+]
+
+EllipseModeEntity.handles = function(name) {
+    return (this.handledNames.indexOf(name) >= 0);
+}
+
+EllipseModeEntity.isParameter = true;
+
+/* global Registry */
+Registry.register(EllipseModeEntity);
+;function ShapeEntity(Interceptor, shapeObject, arguments, canvasX, canvasY) {
     const self = this;
     /* global BaseEntity */
     BaseEntity.call(self, shapeObject, arguments, canvasX, canvasY);
     this.areaAbs = 0;
+    this.currentEllipseMode = Interceptor.currentEllipseMode;
     this.type = Interceptor.currentColor + ` ` + shapeObject.name;
     this.area = 0;
 
@@ -1293,7 +1316,7 @@ Registry.register(FillEntity);;function ShapeEntity(Interceptor, shapeObject, ar
         if (!objectType.localeCompare(`arc`)) {
             // area of full ellipse = PI * horizontal radius * vertical radius.
             // therefore, area of arc = difference bet. arc's start and end radians * horizontal radius * vertical radius.
-            // the below expression is adjusted for negative values and differences in arc's start and end radians over PI*2  
+            // the below expression is adjusted for negative values and differences in arc's start and end radians over PI*2
             const arcSizeInRadians = ((((arguments[5] - arguments[4]) % (PI * 2)) + (PI * 2)) % (PI * 2));
             objectArea = arcSizeInRadians * arguments[2] * arguments[3] / 8;
             if (arguments[6] === `open` || arguments[6] === `chord`) {
@@ -1313,7 +1336,15 @@ Registry.register(FillEntity);;function ShapeEntity(Interceptor, shapeObject, ar
                 }
             }
         } else if (!objectType.localeCompare(`ellipse`)) {
-            objectArea = 3.14 * arguments[2] * arguments[3] / 4;
+            if(!this.currentEllipseMode.localeCompare('center')) {
+              objectArea = 3.14 * arguments[2] * arguments[3] / 4;
+            } else if(!this.currentEllipseMode.localeCompare('radius')) {
+              objectArea = 3.14 * arguments[2] * arguments[3];
+            } else if(!this.currentEllipseMode.localeCompare('corner')) {
+              objectArea = 3.14 * arguments[2] * arguments[3] / 4;
+            } else if(!this.currentEllipseMode.localeCompare('corners')) {
+              objectArea = 3.14 * abs(arguments[2] - arguments[0]) * (arguments[3] - arguments[1]) / 4;
+            }
         } else if (!objectType.localeCompare(`line`)) {
             objectArea = 0;
         } else if (!objectType.localeCompare(`point`)) {
@@ -1354,7 +1385,8 @@ ShapeEntity.handles = function(name) {
 ShapeEntity.isParameter = false;
 
 /* global Registry */
-Registry.register(ShapeEntity);;function TextEntity(Interceptor, shapeObject, arguments, canvasX, canvasY) {
+Registry.register(ShapeEntity);
+;function TextEntity(Interceptor, shapeObject, arguments, canvasX, canvasY) {
     const self = this;
     /* global BaseEntity */
     BaseEntity.call(self, shapeObject, arguments, canvasX, canvasY);
@@ -1387,7 +1419,8 @@ TextEntity.handles = function(name) {
 TextEntity.isParameter = false;
 
 /* global Registry */
-Registry.register(TextEntity);;function TextInterceptor() { // eslint-disable-line
+Registry.register(TextEntity);
+;function TextInterceptor() { // eslint-disable-line
     const self = this;
     /* global baseInterceptor */
     baseInterceptor.call(self);

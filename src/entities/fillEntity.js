@@ -6,7 +6,6 @@ function FillEntity(Interceptor, shapeObject, arguments, canvasX, canvasY) {
         }
         Interceptor.currentColor = Interceptor.getColorName(passedArguments).color + Interceptor.getColorName(passedArguments).rgb;
     }
-
     this.populate(Interceptor);
 }
 FillEntity.handledNames = [
