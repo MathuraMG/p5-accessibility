@@ -122,7 +122,7 @@ function getRGBAname(arguments) {
     });
   } else {
     return ({
-      'color': colorName,
+      'color': colorName + ` `,
       rgb
     });
   }
@@ -132,7 +132,7 @@ function getRGBname(arguments) {
   const colorName = rgbColorName(arguments[0], arguments[1], arguments[2]);
   const rgb = `(` + Math.round(arguments[0]) + `, ` + Math.round(arguments[1]) + `, ` + Math.round(arguments[2]) + `)`;
   return ({
-    'color': colorName,
+    'color': colorName + ` `,
     rgb
   });
 }
@@ -150,7 +150,7 @@ function getHexname(arguments) {
   const b = parseInt(hex[5] + hex[6], 16);
   const rgb = `(` + r + `, ` + g + `, ` + b + `)`;
   return ({
-    'color': colorName,
+    'color': colorName + ` `,
     rgb
   });
 }
