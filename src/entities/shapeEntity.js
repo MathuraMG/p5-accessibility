@@ -5,22 +5,50 @@ function ShapeEntity(Interceptor, shapeObject, arguments, canvasX, canvasY) {
   this.areaAbs = 0;
   this.type = Interceptor.currentColor + ` ` + shapeObject.name;
   this.area = 0;
+  this.length = 0;
 
   this.populate = function(shapeObject, arguments, canvasX, canvasY) {
     this.location = this.getLocation(shapeObject, arguments, canvasX, canvasY);
-    this.areaAbs = this.getObjectArea(shapeObject.name, arguments);
     this.coordLoc = this.canvasLocator(shapeObject, arguments, canvasX, canvasY);
-    this.area = (this.getObjectArea(shapeObject.name, arguments) * 100 / (canvasX * canvasY)).toFixed(2) + `%`;
+    if(!shapeObject.name.localeCompare(`ellipse`) || !shapeObject.name.localeCompare(`rect`)  || !shapeObject.name.localeCompare(`triangle`) || !shapeObject.name.localeCompare(`quad`)) {
+      this.areaAbs = this.getObjectArea(shapeObject.name, arguments);
+      this.area = (this.getObjectArea(shapeObject.name, arguments) * 100 / (canvasX * canvasY)).toFixed(2) + `%`;
+    } else if(!shapeObject.name.localeCompare(`line`)) {
+      this.length = this.getLineLength(arguments);
+    }
   }
 
   this.getAttributes = function() {
-    return ({
-      type: this.type,
-      location: this.location,
-      coordinates: this.coordinates,
-      area: this.area
-    })
+    if((!shapeObject.name.localeCompare(`ellipse`)) || !shapeObject.name.localeCompare(`rect`)  || !shapeObject.name.localeCompare(`triangle`) || !shapeObject.name.localeCompare(`quad`)) {
+      return ({
+        type: this.type,
+        location: this.location,
+        coordinates: this.coordinates,
+        area: this.area
+      })
+    } 
+    else if(!shapeObject.name.localeCompare(`line`)) {
+      return ({
+        type: this.type,
+        location: this.location,
+        coordinates: this.coordinates,
+        length : this.length
+      })
+    } 
+    else {
+      return ({
+        type: this.type,
+        location: this.location,
+        coordinates: this.coordinates         
+      })
+    }
   };
+
+  /* return length of lines */
+  this.getLineLength = function(arguments){
+    const lineLength = Math.round(Math.sqrt((Math.pow(arguments[2]-arguments[0],2)) + (Math.pow(arguments[3]-arguments[1],2))));
+    return lineLength;
+  }
 
   /* return area of the shape */
   this.getObjectArea = function(objectType, arguments) {
