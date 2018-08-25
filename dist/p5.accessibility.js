@@ -1141,14 +1141,14 @@ function RGBString(arguments) {
     })
   };
 
-    this.getLocation = function(object, arguments, canvasX, canvasY) { // eslint-disable-line
+    this.getLocation = function(object, locArgs, canvasX, canvasY) { // eslint-disable-line
     let xCoord, yCoord;
-    arguments = [].slice.call(arguments);
+    locArgs = [].slice.call(locArgs);
     let i = 0;
     const that = this;
     that.coordinates = ``;
 
-    arguments.forEach((argument) => {
+    locArgs.forEach((argument) => {
       const a = argument;
       if (object.params[i].description.indexOf(`x-coordinate`) > -1) {
         xCoord = a;
@@ -1188,14 +1188,14 @@ function RGBString(arguments) {
   }
 
   /* return which part of the canvas an object os present */
-  this.canvasLocator = function(object, arguments, canvasX, canvasY) {
+  this.canvasLocator = function(object, canvasArgs, canvasX, canvasY) {
     let xCoord, yCoord;
     const noRows = 10,
       noCols = 10;
     let locX, locY;
     let i = 0;
-    arguments = [].slice.call(arguments);
-    arguments.forEach((argument) => {
+    canvasArgs = [].slice.call(canvasArgs);
+    canvasArgs.forEach((argument) => {
       const a = argument;
 
       if (object.params[i].description.indexOf(`x-coordinate`) > -1) {
@@ -1221,13 +1221,13 @@ function RGBString(arguments) {
   }
 }
 
-BaseEntity.isParameter = false;;function BackgroundEntity(Interceptor, object, arguments, canvasX, canvasY) {
-  let passedArguments = arguments;
+BaseEntity.isParameter = false;
+;function BackgroundEntity(Interceptor, object, backgroundArgs, canvasX, canvasY) { // eslint-disable-line no-unused-vars
   this.populate = function(Interceptor) {
-    if (passedArguments[0].name === `p5.Color`) {
-      passedArguments = passedArguments[0].levels;
+    if (backgroundArgs[0].name === `p5.Color`) {
+      backgroundArgs = backgroundArgs[0].levels;
     }
-    Interceptor.bgColor = Interceptor.getColorName(passedArguments).color + Interceptor.getColorName(passedArguments).rgb;
+    Interceptor.bgColor = Interceptor.getColorName(backgroundArgs).color + Interceptor.getColorName(backgroundArgs).rgb;
   }
 
   this.populate(Interceptor);
@@ -1243,13 +1243,14 @@ BackgroundEntity.handles = function(name) {
 BackgroundEntity.isParameter = true;
 
 /* global Registry */
-Registry.register(BackgroundEntity);;function FillEntity(Interceptor, shapeObject, arguments, canvasX, canvasY) {
-  let passedArguments = arguments;
+Registry.register(BackgroundEntity);
+;function FillEntity(Interceptor, shapeObject, fillArgs, canvasX, canvasY) // eslint-disable-line no-unused-vars
+{
   this.populate = function(Interceptor) {
-    if (passedArguments[0].name === `p5.Color`) {
-      passedArguments = passedArguments[0].levels;
+    if (fillArgs[0].name === `p5.Color`) {
+      fillArgs = fillArgs[0].levels;
     }
-    Interceptor.currentColor = Interceptor.getColorName(passedArguments).color + Interceptor.getColorName(passedArguments).rgb;
+    Interceptor.currentColor = Interceptor.getColorName(fillArgs).color + Interceptor.getColorName(fillArgs).rgb;
   }
 
   this.populate(Interceptor);
@@ -1265,10 +1266,11 @@ FillEntity.handles = function(name) {
 FillEntity.isParameter = true;
 
 /* global Registry */
-Registry.register(FillEntity);;function ShapeEntity(Interceptor, shapeObject, arguments, canvasX, canvasY) {
+Registry.register(FillEntity);
+;function ShapeEntity(Interceptor, shapeObject, shapeArgs, canvasX, canvasY) {
   const self = this;
   /* global BaseEntity */
-  BaseEntity.call(self, shapeObject, arguments, canvasX, canvasY);
+  BaseEntity.call(self, shapeObject, shapeArgs, canvasX, canvasY);
   this.areaAbs = 0;
 
   this.currentEllipseMode = Interceptor.currentEllipseMode;
@@ -1276,11 +1278,11 @@ Registry.register(FillEntity);;function ShapeEntity(Interceptor, shapeObject, ar
   this.type = Interceptor.currentColor + ` ` + shapeObject.name;
   this.area = 0;
 
-  this.populate = function(shapeObject, arguments, canvasX, canvasY) {
-    this.location = this.getLocation(shapeObject, arguments, canvasX, canvasY);
-    this.areaAbs = this.getObjectArea(shapeObject.name, arguments);
-    this.coordLoc = this.canvasLocator(shapeObject, arguments, canvasX, canvasY);
-    this.area = (this.getObjectArea(shapeObject.name, arguments) * 100 / (canvasX * canvasY)).toFixed(2) + `%`;
+  this.populate = function(shapeObject, shapeArgs, canvasX, canvasY) {
+    this.location = this.getLocation(shapeObject, shapeArgs, canvasX, canvasY);
+    this.areaAbs = this.getObjectArea(shapeObject.name, shapeArgs);
+    this.coordLoc = this.canvasLocator(shapeObject, shapeArgs, canvasX, canvasY);
+    this.area = (this.getObjectArea(shapeObject.name, shapeArgs) * 100 / (canvasX * canvasY)).toFixed(2) + `%`;
   }
 
   this.getAttributes = function() {
@@ -1293,23 +1295,23 @@ Registry.register(FillEntity);;function ShapeEntity(Interceptor, shapeObject, ar
   };
 
   /* return area of the shape */
-  this.getObjectArea = function(objectType, arguments) {
+  this.getObjectArea = function(objectType, shapeArgs) {
     let objectArea = 0;
     if (!objectType.localeCompare(`arc`)) {
       // area of full ellipse = PI * horizontal radius * vertical radius.
       // therefore, area of arc = difference bet. arc's start and end radians * horizontal radius * vertical radius.
-      // the below expression is adjusted for negative values and differences in arc's start and end radians over PI*2  
-      const arcSizeInRadians = ((((arguments[5] - arguments[4]) % (PI * 2)) + (PI * 2)) % (PI * 2));
-      objectArea = arcSizeInRadians * arguments[2] * arguments[3] / 8;
-      if (arguments[6] === `open` || arguments[6] === `chord`) {
+      // the below expression is adjusted for negative values and differences in arc's start and end radians over PI*2
+      const arcSizeInRadians = ((((shapeArgs[5] - shapeArgs[4]) % (PI * 2)) + (PI * 2)) % (PI * 2));
+      objectArea = arcSizeInRadians * shapeArgs[2] * shapeArgs[3] / 8;
+      if (shapeArgs[6] === `open` || shapeArgs[6] === `chord`) {
         // when the arc's mode is OPEN or CHORD, we need to account for the area of the triangle that is formed to close the arc
         // (Ax( By −	Cy) +	Bx(Cy −	Ay) +	Cx(Ay −	By ) )/2
-        const Ax = arguments[0];
-        const Ay = arguments[1];
-        const Bx = arguments[0] + (arguments[2] / 2) * cos(arguments[4]).toFixed(2);
-        const By = arguments[1] + (arguments[3] / 2) * sin(arguments[4]).toFixed(2);
-        const Cx = arguments[0] + (arguments[2] / 2) * cos(arguments[5]).toFixed(2);
-        const Cy = arguments[1] + (arguments[3] / 2) * sin(arguments[5]).toFixed(2);
+        const Ax = shapeArgs[0];
+        const Ay = shapeArgs[1];
+        const Bx = shapeArgs[0] + (shapeArgs[2] / 2) * cos(shapeArgs[4]).toFixed(2);
+        const By = shapeArgs[1] + (shapeArgs[3] / 2) * sin(shapeArgs[4]).toFixed(2);
+        const Cx = shapeArgs[0] + (shapeArgs[2] / 2) * cos(shapeArgs[5]).toFixed(2);
+        const Cy = shapeArgs[1] + (shapeArgs[3] / 2) * sin(shapeArgs[5]).toFixed(2);
         const areaOfExtraTriangle = abs(Ax * (By - Cy) + Bx * (Cy - Ay) + Cx * (Ay - By)) / 2;
         if (arcSizeInRadians > PI) {
           objectArea = objectArea + areaOfExtraTriangle;
@@ -1327,28 +1329,27 @@ Registry.register(FillEntity);;function ShapeEntity(Interceptor, shapeObject, ar
       } else if(!this.currentEllipseMode.localeCompare(`corners`)) {
         objectArea = 3.14 * abs(arguments[2] - arguments[0]) * (arguments[3] - arguments[1]) / 4;
       }
-
     } else if (!objectType.localeCompare(`line`)) {
       objectArea = 0;
     } else if (!objectType.localeCompare(`point`)) {
       objectArea = 0;
     } else if (!objectType.localeCompare(`quad`)) {
       // x1y2+x2y3+x3y4+x4y1−x2y1−x3y2−x4y3−x1y4
-      objectArea = (arguments[0] * arguments[1] + arguments[2] * arguments[3] +
-                    arguments[4] * arguments[5] + arguments[6] * arguments[7]) -
-                (arguments[2] * arguments[1] + arguments[4] * arguments[3] +
-                    arguments[6] * arguments[5] + arguments[0] * arguments[7]);
+      objectArea = (shapeArgs[0] * shapeArgs[1] + shapeArgs[2] * shapeArgs[3] +
+                    shapeArgs[4] * shapeArgs[5] + shapeArgs[6] * shapeArgs[7]) -
+                (shapeArgs[2] * shapeArgs[1] + shapeArgs[4] * shapeArgs[3] +
+                    shapeArgs[6] * shapeArgs[5] + shapeArgs[0] * shapeArgs[7]);
     } else if (!objectType.localeCompare(`rect`)) {
-      objectArea = arguments[2] * arguments[3];
+      objectArea = shapeArgs[2] * shapeArgs[3];
     } else if (!objectType.localeCompare(`triangle`)) {
-      objectArea = abs(arguments[0] * (arguments[3] - arguments[5]) + arguments[2] * (arguments[5] - arguments[1]) +
-                arguments[4] * (arguments[1] - arguments[3])) / 2;
+      objectArea = abs(shapeArgs[0] * (shapeArgs[3] - shapeArgs[5]) + shapeArgs[2] * (shapeArgs[5] - shapeArgs[1]) +
+                shapeArgs[4] * (shapeArgs[1] - shapeArgs[3])) / 2;
       // (Ax( By −	Cy) +	Bx(Cy −	Ay) +	Cx(Ay −	By ))/2
     }
     return objectArea;
   }
 
-  this.populate(shapeObject, arguments, canvasX, canvasY);
+  this.populate(shapeObject, shapeArgs, canvasX, canvasY);
 }
 
 ShapeEntity.handledNames = [
@@ -1371,15 +1372,14 @@ ShapeEntity.isParameter = false;
 
 Registry.register(ShapeEntity);
 ;function TextEntity(Interceptor, shapeObject, arguments, canvasX, canvasY) {
-
   const self = this;
   /* global BaseEntity */
-  BaseEntity.call(self, shapeObject, arguments, canvasX, canvasY);
-  this.type = String(arguments[0]).substring(0, 20) + `(` + Interceptor.currentColor + `)`;
+  BaseEntity.call(self, shapeObject, textArgs, canvasX, canvasY);
+  this.type = String(textArgs[0]).substring(0, 20) + `(` + Interceptor.currentColor + `)`;
 
-  this.populate = function(shapeObject, arguments, canvasX, canvasY) {
-    this.location = this.getLocation(shapeObject, arguments, canvasX, canvasY);
-    this.coordLoc = this.canvasLocator(shapeObject, arguments, canvasX, canvasY);
+  this.populate = function(shapeObject, textArgs, canvasX, canvasY) {
+    this.location = this.getLocation(shapeObject, textArgs, canvasX, canvasY);
+    this.coordLoc = this.canvasLocator(shapeObject, textArgs, canvasX, canvasY);
   };
 
   this.getAttributes = function() {
@@ -1390,7 +1390,7 @@ Registry.register(ShapeEntity);
     })
   };
 
-  this.populate(shapeObject, arguments, canvasX, canvasY);
+  this.populate(shapeObject, textArgs, canvasX, canvasY);
 }
 
 TextEntity.handledNames = [
@@ -1404,7 +1404,6 @@ TextEntity.handles = function(name) {
 TextEntity.isParameter = false;
 
 /* global Registry */
-
 Registry.register(TextEntity);;function EllipseModeEntity(Interceptor, arguments) {
   const mode = arguments[0];
   this.populate = function(Interceptor) {
@@ -1426,7 +1425,6 @@ EllipseModeEntity.isParameter = true;
 /* global Registry */
 Registry.register(EllipseModeEntity);
 ;function TextInterceptor() { // eslint-disable-line
-
   const self = this;
   /* global baseInterceptor */
   baseInterceptor.call(self);
@@ -1441,7 +1439,7 @@ TextInterceptor.prototype.clearVariables = function(object) {
   return object;
 }
 
-TextInterceptor.prototype.populateObject = function(x, arguments, object, table, isDraw) {
+TextInterceptor.prototype.populateObject = function(x, passedArgs, object, isDraw) {
   /* global objectCount */
   objectCount = object.objectCount;
   /* global objectArray */
@@ -1451,15 +1449,15 @@ TextInterceptor.prototype.populateObject = function(x, arguments, object, table,
   if (!isDraw) {
     // check for special function in setup -> createCanvas
     if (!x.name.localeCompare(`createCanvas`)) {
-      this.canvasDetails.width = arguments[0];
-      this.canvasDetails.height = arguments[1];
+      this.canvasDetails.width = passedArgs[0];
+      this.canvasDetails.height = passedArgs[1];
     }
   }
   /* global Registry */
   const entityClass = Registry.entityFor(x.name);
 
   if (entityClass && !entityClass.isParameter) {
-    objectArray[objectCount] = new entityClass(this, x, arguments, this.canvasDetails.width, this.canvasDetails.height);
+    objectArray[objectCount] = new entityClass(this, x, passedArgs, this.canvasDetails.width, this.canvasDetails.height);
 
     if (objectTypeCount[x.name]) {
       objectTypeCount[x.name]++;
@@ -1468,7 +1466,7 @@ TextInterceptor.prototype.populateObject = function(x, arguments, object, table,
     }
     objectCount++;
   } else if (entityClass && entityClass.isParameter) {
-    new entityClass(this, x, arguments, this.canvasDetails.width, this.canvasDetails.height);
+    new entityClass(this, x, passedArgs, this.canvasDetails.width, this.canvasDetails.height);
   }
   return ({
     objectCount,
@@ -1639,7 +1637,8 @@ TextInterceptor.prototype.getSummary = function(object1, object2, element) {
   }
 }
 
-const textInterceptor = new TextInterceptor();;/* global funcNames */
+const textInterceptor = new TextInterceptor();
+;/* global funcNames */
 /* global allData */
 funcNames = allData.classitems.map((x) => {
   if (x.overloads) {
@@ -1681,7 +1680,7 @@ if (document.getElementById(`textOutput-content`)) {
         details.innerHTML = ``;
         summary.innerHTML = ``;
         /* global textInterceptor */
-        textInterceptor.setupObject = textInterceptor.populateObject(x, arguments, textInterceptor.setupObject, table, false);
+        textInterceptor.setupObject = textInterceptor.populateObject(x, orgArg, textInterceptor.setupObject, false);
         textInterceptor.getSummary(textInterceptor.setupObject, textInterceptor.drawObject, summary);
         textInterceptor.populateTable(table, textInterceptor.setupObject.objectArray);
       } else if (frameCount % 20 === 19) {
@@ -1689,16 +1688,17 @@ if (document.getElementById(`textOutput-content`)) {
           textInterceptor.drawObject = textInterceptor.clearVariables(textInterceptor.drawObject);
         }
       } else if (frameCount === 1 || frameCount % 20 === 0) {
-        textInterceptor.drawObject = textInterceptor.populateObject(x, arguments, textInterceptor.drawObject, details, true);
+        textInterceptor.drawObject = textInterceptor.populateObject(x, orgArg, textInterceptor.drawObject, details, true);
         textInterceptor.getSummary(textInterceptor.setupObject, textInterceptor.drawObject, summary);
         textInterceptor.populateTable(
           table, textInterceptor.setupObject.objectArray.concat(textInterceptor.drawObject.objectArray));
       }
-      return originalFunc.apply(this, arguments);
+      return originalFunc.apply(this, orgArg);
     };
   });
 
-};var shadowDOMElement; // eslint-disable-line
+}
+;var shadowDOMElement; // eslint-disable-line
 function GridInterceptor() {
   const self = this;
   /* global baseInterceptor */
@@ -1733,7 +1733,7 @@ GridInterceptor.prototype.createShadowDOMElement = function(document) {
   }
   shadowDOMElement = document.getElementById(`tableOutput-content`);
 }
-GridInterceptor.prototype.populateObject = function(x, arguments, object, table, isDraw) {
+GridInterceptor.prototype.populateObject = function(x, passedArgs, object, isDraw) {
   /* global objectCount */
   objectCount = object.objectCount;
   /* global objectArray */
@@ -1743,15 +1743,15 @@ GridInterceptor.prototype.populateObject = function(x, arguments, object, table,
   if (!isDraw) {
     // check for special function in setup -> createCanvas
     if (!x.name.localeCompare(`createCanvas`)) {
-      this.canvasDetails.width = arguments[0];
-      this.canvasDetails.height = arguments[1];
+      this.canvasDetails.width = passedArgs[0];
+      this.canvasDetails.height = passedArgs[1];
     }
   }
   /* global Registry */
   const entityClass = Registry.entityFor(x.name);
 
   if (entityClass && !entityClass.isParameter) {
-    objectArray[objectCount] = new entityClass(this, x, arguments, this.canvasDetails.width, this.canvasDetails.height);
+    objectArray[objectCount] = new entityClass(this, x, passedArgs, this.canvasDetails.width, this.canvasDetails.height);
 
     if (objectTypeCount[x.name]) {
       objectTypeCount[x.name]++;
@@ -1760,7 +1760,7 @@ GridInterceptor.prototype.populateObject = function(x, arguments, object, table,
     }
     objectCount++;
   } else if (entityClass && entityClass.isParameter) {
-    new entityClass(this, x, arguments, this.canvasDetails.width, this.canvasDetails.height);
+    new entityClass(this, x, passedArgs, this.canvasDetails.width, this.canvasDetails.height);
   }
   return ({
     objectCount,
@@ -1850,7 +1850,8 @@ GridInterceptor.prototype.populateObjectDetails = function(object1, object2, ele
 }
 
 
-const gridInterceptor = new GridInterceptor();;/* global funcNames */
+const gridInterceptor = new GridInterceptor();
+;/* global funcNames */
 /* global allData */
 funcNames = allData.classitems.map((x) => {
   if (x.overloads) {
@@ -1895,12 +1896,12 @@ if (document.getElementById(`tableOutput-content`)) {
         /* global gridInterceptor */
         gridInterceptor.createShadowDOMElement(document);
         gridInterceptor.setupObject =
-                    gridInterceptor.populateObject(x, arguments, gridInterceptor.setupObject, details, false);
+                    gridInterceptor.populateObject(x, orgArg, gridInterceptor.setupObject, false);
         gridInterceptor.populateObjectDetails(gridInterceptor.setupObject, gridInterceptor.drawObject, summary, details);
         gridInterceptor.populateTable(details, gridInterceptor.setupObject);
       } else if (frameCount === 1 || frameCount % 20 === 0) {
         gridInterceptor.drawObject =
-                    gridInterceptor.populateObject(x, arguments, gridInterceptor.drawObject, details, true);
+                    gridInterceptor.populateObject(x, orgArg, gridInterceptor.drawObject, details, true);
         gridInterceptor.isCleared = false;
 
         // clean the cells
@@ -1920,10 +1921,11 @@ if (document.getElementById(`tableOutput-content`)) {
       if (x.name === `redraw`) { // reset some of the variables
         gridInterceptor.drawObject = gridInterceptor.clearVariables(gridInterceptor.drawObject);
       }
-      return originalFunc.apply(this, arguments);
+      return originalFunc.apply(this, orgArg);
     };
   });
-};const baseFreq = 440;
+}
+;const baseFreq = 440;
 let currLogFreq, currVol, currPan;
 
 // initialise parameters
@@ -1968,7 +1970,7 @@ if (document.getElementById(`soundOutput-content`)) {
     const originalFunc = p5.prototype[x.name];
     p5.prototype[x.name] = function() {
       /* global orgArg */
-      orgArg = arguments;
+      const orgArg = arguments;
 
       if (frameCount === 1 && (x.module.localeCompare(`Shape`) === 0)) {
         i = 0;
@@ -2059,7 +2061,7 @@ if (document.getElementById(`soundOutput-content`)) {
           gainNodes[movingObjectCount - 1].gain.value = 0;
         }
       }
-      return originalFunc.apply(this, arguments);
+      return originalFunc.apply(this, orgArg);
     };
   });
 }

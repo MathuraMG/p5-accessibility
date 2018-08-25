@@ -8,7 +8,8 @@ require.config({
 
 const allTests = [
   `tests/gridInterceptor`,
-  `tests/interceptorHelperFunctions.js`
+  `tests/interceptorHelperFunctions.js`,
+  `tests/textInterceptorFunctions.js`
 ];
 
 require(allTests, () => {

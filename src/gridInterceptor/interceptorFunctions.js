@@ -33,7 +33,7 @@ GridInterceptor.prototype.createShadowDOMElement = function(document) {
   }
   shadowDOMElement = document.getElementById(`tableOutput-content`);
 }
-GridInterceptor.prototype.populateObject = function(x, arguments, object, table, isDraw) {
+GridInterceptor.prototype.populateObject = function(x, passedArgs, object, isDraw) {
   /* global objectCount */
   objectCount = object.objectCount;
   /* global objectArray */
@@ -43,15 +43,15 @@ GridInterceptor.prototype.populateObject = function(x, arguments, object, table,
   if (!isDraw) {
     // check for special function in setup -> createCanvas
     if (!x.name.localeCompare(`createCanvas`)) {
-      this.canvasDetails.width = arguments[0];
-      this.canvasDetails.height = arguments[1];
+      this.canvasDetails.width = passedArgs[0];
+      this.canvasDetails.height = passedArgs[1];
     }
   }
   /* global Registry */
   const entityClass = Registry.entityFor(x.name);
 
   if (entityClass && !entityClass.isParameter) {
-    objectArray[objectCount] = new entityClass(this, x, arguments, this.canvasDetails.width, this.canvasDetails.height);
+    objectArray[objectCount] = new entityClass(this, x, passedArgs, this.canvasDetails.width, this.canvasDetails.height);
 
     if (objectTypeCount[x.name]) {
       objectTypeCount[x.name]++;
@@ -60,7 +60,7 @@ GridInterceptor.prototype.populateObject = function(x, arguments, object, table,
     }
     objectCount++;
   } else if (entityClass && entityClass.isParameter) {
-    new entityClass(this, x, arguments, this.canvasDetails.width, this.canvasDetails.height);
+    new entityClass(this, x, passedArgs, this.canvasDetails.width, this.canvasDetails.height);
   }
   return ({
     objectCount,

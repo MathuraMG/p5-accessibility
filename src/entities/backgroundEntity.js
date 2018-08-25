@@ -1,10 +1,9 @@
-function BackgroundEntity(Interceptor, object, arguments, canvasX, canvasY) {
-  let passedArguments = arguments;
+function BackgroundEntity(Interceptor, object, backgroundArgs, canvasX, canvasY) { // eslint-disable-line no-unused-vars
   this.populate = function(Interceptor) {
-    if (passedArguments[0].name === `p5.Color`) {
-      passedArguments = passedArguments[0].levels;
+    if (backgroundArgs[0].name === `p5.Color`) {
+      backgroundArgs = backgroundArgs[0].levels;
     }
-    Interceptor.bgColor = Interceptor.getColorName(passedArguments).color + Interceptor.getColorName(passedArguments).rgb;
+    Interceptor.bgColor = Interceptor.getColorName(backgroundArgs).color + Interceptor.getColorName(backgroundArgs).rgb;
   }
 
   this.populate(Interceptor);

@@ -1,3 +1,5 @@
+[![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
+
 # p5.accessibility.js
 
 ## Overview
@@ -6,7 +8,7 @@ p5.accessibility.js makes the p5 canvas more accessible to people who are blind 
 
 To learn about using p5.js with a screen reader please read the ["Using p5 with a screen reader" tutorial.](https://p5js.org/learn/p5-screen-reader.html)
 
-***Note** : the p5.accessibility library is currently not supported on MacOS. *
+**\*Note** : the p5.accessibility library is currently not supported on MacOS. \*
 
 ### About the library
 

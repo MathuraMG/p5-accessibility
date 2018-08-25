@@ -43,12 +43,12 @@ if (document.getElementById(`tableOutput-content`)) {
         /* global gridInterceptor */
         gridInterceptor.createShadowDOMElement(document);
         gridInterceptor.setupObject =
-                    gridInterceptor.populateObject(x, arguments, gridInterceptor.setupObject, details, false);
+                    gridInterceptor.populateObject(x, orgArg, gridInterceptor.setupObject, false);
         gridInterceptor.populateObjectDetails(gridInterceptor.setupObject, gridInterceptor.drawObject, summary, details);
         gridInterceptor.populateTable(details, gridInterceptor.setupObject);
       } else if (frameCount === 1 || frameCount % 20 === 0) {
         gridInterceptor.drawObject =
-                    gridInterceptor.populateObject(x, arguments, gridInterceptor.drawObject, details, true);
+                    gridInterceptor.populateObject(x, orgArg, gridInterceptor.drawObject, details, true);
         gridInterceptor.isCleared = false;
 
         // clean the cells
@@ -68,7 +68,7 @@ if (document.getElementById(`tableOutput-content`)) {
       if (x.name === `redraw`) { // reset some of the variables
         gridInterceptor.drawObject = gridInterceptor.clearVariables(gridInterceptor.drawObject);
       }
-      return originalFunc.apply(this, arguments);
+      return originalFunc.apply(this, orgArg);
     };
   });
 }

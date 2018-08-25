@@ -14,14 +14,14 @@ function BaseEntity(Interceptor, object) {
     })
   };
 
-    this.getLocation = function(object, arguments, canvasX, canvasY) { // eslint-disable-line
+    this.getLocation = function(object, locArgs, canvasX, canvasY) { // eslint-disable-line
     let xCoord, yCoord;
-    arguments = [].slice.call(arguments);
+    locArgs = [].slice.call(locArgs);
     let i = 0;
     const that = this;
     that.coordinates = ``;
 
-    arguments.forEach((argument) => {
+    locArgs.forEach((argument) => {
       const a = argument;
       if (object.params[i].description.indexOf(`x-coordinate`) > -1) {
         xCoord = a;
@@ -61,14 +61,14 @@ function BaseEntity(Interceptor, object) {
   }
 
   /* return which part of the canvas an object os present */
-  this.canvasLocator = function(object, arguments, canvasX, canvasY) {
+  this.canvasLocator = function(object, canvasArgs, canvasX, canvasY) {
     let xCoord, yCoord;
     const noRows = 10,
       noCols = 10;
     let locX, locY;
     let i = 0;
-    arguments = [].slice.call(arguments);
-    arguments.forEach((argument) => {
+    canvasArgs = [].slice.call(canvasArgs);
+    canvasArgs.forEach((argument) => {
       const a = argument;
 
       if (object.params[i].description.indexOf(`x-coordinate`) > -1) {

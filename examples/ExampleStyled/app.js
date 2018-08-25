@@ -13,7 +13,7 @@ function draw() {
   ellipse(20,20,20,20);
   fill(32,255,65);
   ellipse(50,x,10,10);
-  fill("#00ffb2");
+  fill(`#00ffb2`);
   ellipse(150,200-x,10,10);
   fill(150);
   rect(170,170,25,25);

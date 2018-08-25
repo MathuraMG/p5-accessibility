@@ -3,7 +3,10 @@ define([`chai`], chai => {
 
   /* global describe */
   describe(`gridInterceptor Functions`, () => {
-    let gi; /* shadowDOMElement */
+    let gi;
+    /* global before after */
+    before(() => {});
+    after(() => {});
     /* global it */
     it(`can be created`, () => {
       /* global GridInterceptor */
@@ -25,14 +28,8 @@ define([`chai`], chai => {
       expect(gi.drawObject.objectCount).to.be.a(`number`).and.to.equal(0);
       expect(gi.isCleared).to.be.ok;
     });
-    /*
-                it(`creates a shadow element`, () => {
-                    gi.createShadowDOMElement(document);
-                    expect(shadowDOMElement).to.be.a(`object`);
-                })
-                it(`populates object`, () => {
+    // it(`populates object`, () => {
 
-                })
-                */
+    // })
   })
 })

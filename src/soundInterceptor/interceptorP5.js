@@ -43,7 +43,7 @@ if (document.getElementById(`soundOutput-content`)) {
     const originalFunc = p5.prototype[x.name];
     p5.prototype[x.name] = function() {
       /* global orgArg */
-      orgArg = arguments;
+      const orgArg = arguments;
 
       if (frameCount === 1 && (x.module.localeCompare(`Shape`) === 0)) {
         i = 0;
@@ -134,7 +134,7 @@ if (document.getElementById(`soundOutput-content`)) {
           gainNodes[movingObjectCount - 1].gain.value = 0;
         }
       }
-      return originalFunc.apply(this, arguments);
+      return originalFunc.apply(this, orgArg);
     };
   });
 }

@@ -1,10 +1,10 @@
-function FillEntity(Interceptor, shapeObject, arguments, canvasX, canvasY) {
-  let passedArguments = arguments;
+function FillEntity(Interceptor, shapeObject, fillArgs, canvasX, canvasY) // eslint-disable-line no-unused-vars
+{
   this.populate = function(Interceptor) {
-    if (passedArguments[0].name === `p5.Color`) {
-      passedArguments = passedArguments[0].levels;
+    if (fillArgs[0].name === `p5.Color`) {
+      fillArgs = fillArgs[0].levels;
     }
-    Interceptor.currentColor = Interceptor.getColorName(passedArguments).color + Interceptor.getColorName(passedArguments).rgb;
+    Interceptor.currentColor = Interceptor.getColorName(fillArgs).color + Interceptor.getColorName(fillArgs).rgb;
   }
 
   this.populate(Interceptor);
