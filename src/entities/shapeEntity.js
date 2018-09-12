@@ -3,6 +3,7 @@ function ShapeEntity(Interceptor, shapeObject, shapeArgs, canvasX, canvasY) {
   /* global BaseEntity */
   BaseEntity.call(self, shapeObject, shapeArgs, canvasX, canvasY);
   this.areaAbs = 0;
+  this.currentEllipseMode = Interceptor.currentEllipseMode;
   this.type = Interceptor.currentColor + ` ` + shapeObject.name;
   this.area = 0;
 
@@ -48,7 +49,15 @@ function ShapeEntity(Interceptor, shapeObject, shapeArgs, canvasX, canvasY) {
         }
       }
     } else if (!objectType.localeCompare(`ellipse`)) {
-      objectArea = 3.14 * shapeArgs[2] * shapeArgs[3] / 4;
+      if(!this.currentEllipseMode.localeCompare(`center`)) {
+        objectArea = 3.14 * arguments[2] * arguments[3] / 4;
+      } else if(!this.currentEllipseMode.localeCompare(`radius`)) {
+        objectArea = 3.14 * arguments[2] * arguments[3];
+      } else if(!this.currentEllipseMode.localeCompare(`corner`)) {
+        objectArea = 3.14 * arguments[2] * arguments[3] / 4;
+      } else if(!this.currentEllipseMode.localeCompare(`corners`)) {
+        objectArea = 3.14 * abs(arguments[2] - arguments[0]) * (arguments[3] - arguments[1]) / 4;
+      }
     } else if (!objectType.localeCompare(`line`)) {
       objectArea = 0;
     } else if (!objectType.localeCompare(`point`)) {

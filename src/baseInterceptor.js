@@ -3,6 +3,7 @@ function baseInterceptor() {
   this.prevTotalCount = 0,
   this.totalCount = 0,
   this.currentColor = `white`,
+  this.currentEllipseMode = `center`,
   this.bgColor = `white`,
   this.objectArea = 0,
   this.coordinates = [],
