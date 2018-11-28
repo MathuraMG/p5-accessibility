@@ -1,6 +1,6 @@
 {
     "name": "p5.accessibility",
-    "version": "0.1.1",
+    "version": "0.2.0",
     "description": "npm package to provide text and sound additions to p5 sketch output",
     "main": "index.js",
     "scripts": {
@@ -10,7 +10,11 @@
     "contributors": [
         "MathuraMG",
         "lmhyphenn",
-        "CleezyITP"
+        "CleezyITP",
+        "spiray",
+        "mithru",
+        "git-ebetts",
+        "jbrundage"
     ],
     "bugs": "https://github.com/processing/p5.accessibility/issues",
     "license": "ISC",
