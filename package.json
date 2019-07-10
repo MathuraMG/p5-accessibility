@@ -1,42 +1,43 @@
 {
-    "name": "p5.accessibility",
-    "version": "0.2.0",
-    "description": "npm package to provide text and sound additions to p5 sketch output",
-    "main": "index.js",
-    "scripts": {
-        "test": "grunt run-tests",
-        "build": "eslint src/ && grunt"
-    },
-    "contributors": [
-        "MathuraMG",
-        "lmhyphenn",
-        "CleezyITP",
-        "spiray",
-        "mithru",
-        "git-ebetts",
-        "jbrundage"
-    ],
-    "bugs": "https://github.com/processing/p5.accessibility/issues",
-    "license": "ISC",
-    "dependencies": {
-        "grunt-cli": "^1.2.0",
-        "grunt-contrib-connect": "^1.0.2",
-        "grunt-curl": "^2.4.1",
-        "jquery": "^3.2.1"
-    },
-    "devDependencies": {
-        "eslint": "^5.0.1",
-        "eslint-config-p5js": "^1.0.1",
-        "grunt": "^1.0.3",
-        "grunt-contrib-coffee": "^2.0.0",
-        "grunt-contrib-concat": "^0.5.0",
-        "grunt-contrib-cssmin": "~0.10.0",
-        "grunt-contrib-sass": "^0.7.3",
-        "grunt-contrib-uglify": "^3.3.0",
-        "grunt-contrib-watch": "^1.1.0",
-        "grunt-eslint": "^21.0.0",
-        "grunt-mocha": "^1.1.0",
-        "grunt-open": "^0.2.3",
-        "nyc": "^12.0.2"
-    }
+  "name": "p5.accessibility",
+  "version": "0.2.0",
+  "description": "npm package to provide text and sound additions to p5 sketch output",
+  "main": "index.js",
+  "scripts": {
+    "test": "grunt run-tests",
+    "build": "eslint src/ && grunt"
+  },
+  "contributors": [
+    "MathuraMG",
+    "lmhyphenn",
+    "CleezyITP",
+    "spiray",
+    "mithru",
+    "git-ebetts",
+    "jbrundage"
+  ],
+  "bugs": "https://github.com/processing/p5.accessibility/issues",
+  "license": "ISC",
+  "dependencies": {
+    "grunt-cli": "^1.2.0",
+    "grunt-contrib-connect": "^1.0.2",
+    "grunt-curl": "^2.5.0",
+    "jquery": "^3.4.0",
+    "snyk": "^1.192.4"
+  },
+  "devDependencies": {
+    "eslint": "^5.0.1",
+    "eslint-config-p5js": "^1.0.1",
+    "grunt": "^1.0.4",
+    "grunt-contrib-coffee": "^2.0.0",
+    "grunt-contrib-concat": "^0.5.0",
+    "grunt-contrib-cssmin": "^3.0.0",
+    "grunt-contrib-sass": "^0.7.3",
+    "grunt-contrib-uglify": "^3.3.0",
+    "grunt-contrib-watch": "^1.1.0",
+    "grunt-eslint": "^21.0.0",
+    "grunt-mocha": "^1.2.0",
+    "grunt-open": "^0.2.4",
+    "nyc": "^14.1.1"
+  }
 }
