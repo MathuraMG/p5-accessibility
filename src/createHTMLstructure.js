@@ -36,11 +36,6 @@ function createTextStructure() {
   contentTable.setAttribute(`id`, `textOutput-content-table`);
   contentTable.setAttribute(`summary`, `text output details`);
 
-  contentDetails.setAttribute(`id`, `textOutput-content-details`);
-  contentDetails.setAttribute(`tabIndex`, `0`);
-  contentDetails.setAttribute(`aria-label`, `text output details`);
-  contentDetails.setAttribute(`role`, `main`);
-
 }
 
 function createTableStructure() {

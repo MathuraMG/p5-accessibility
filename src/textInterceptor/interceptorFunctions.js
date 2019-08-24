@@ -56,6 +56,7 @@ TextInterceptor.prototype.populateTable = function(table, objectArray) {
         const row = table.children[j];
         const tempCol = row.children.length;
         const properties = Object.keys(objectArray[j].getAttributes());
+        console.log(row);
 
         if (tempCol < properties.length) { // ie - there are more cols now
           for (let i = 0; i < tempCol; i++) {

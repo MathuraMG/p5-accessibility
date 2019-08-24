@@ -755,11 +755,6 @@ function createTextStructure() {
   contentTable.setAttribute(`id`, `textOutput-content-table`);
   contentTable.setAttribute(`summary`, `text output details`);
 
-  contentDetails.setAttribute(`id`, `textOutput-content-details`);
-  contentDetails.setAttribute(`tabIndex`, `0`);
-  contentDetails.setAttribute(`aria-label`, `text output details`);
-  contentDetails.setAttribute(`role`, `main`);
-
 }
 
 function createTableStructure() {
@@ -1241,7 +1236,7 @@ Registry.register(FillEntity);
 
   this.populate = function(shapeObject, arguments, canvasX, canvasY) {
     this.location = this.getLocation(shapeObject, arguments, canvasX, canvasY);
-    this.coordLoc = this.canvasLocator(shapeObject, arguments, canvasX, canvasY);
+    //this.coordLoc = this.canvasLocator(shapeObject, arguments, canvasX, canvasY);
     if(!shapeObject.name.localeCompare(`ellipse`) || !shapeObject.name.localeCompare(`rect`)  || !shapeObject.name.localeCompare(`triangle`) || !shapeObject.name.localeCompare(`quad`)) {
       this.areaAbs = this.getObjectArea(shapeObject.name, arguments);
       this.area = (this.getObjectArea(shapeObject.name, arguments) * 100 / (canvasX * canvasY)).toFixed(2) + `%`;
@@ -1368,7 +1363,7 @@ Registry.register(ShapeEntity);
 
   this.populate = function(shapeObject, textArgs, canvasX, canvasY) {
     this.location = this.getLocation(shapeObject, textArgs, canvasX, canvasY);
-    this.coordLoc = this.canvasLocator(shapeObject, textArgs, canvasX, canvasY);
+    this.coordLoc = this.canvasLocator(shapeObject, textArgs, /*canvasX, canvasY*/);
   };
 
   this.getAttributes = function() {
@@ -1471,6 +1466,7 @@ TextInterceptor.prototype.populateTable = function(table, objectArray) {
         const row = table.children[j];
         const tempCol = row.children.length;
         const properties = Object.keys(objectArray[j].getAttributes());
+        console.log(row);
 
         if (tempCol < properties.length) { // ie - there are more cols now
           for (let i = 0; i < tempCol; i++) {
@@ -1665,14 +1661,12 @@ if (document.getElementById(`textOutput-content`)) {
       const element = document.getElementById(id);
       return element;
     };
-    const details = byID(`textOutput-content-details`);
     const summary = byID(`textOutput-content-summary`);
     const table = byID(`textOutput-content-table`);
     p5.prototype[x.name] = function() {
       /* global orgArg */
       orgArg = arguments;
       if (frameCount === 0) { // for setup
-        details.innerHTML = ``;
         summary.innerHTML = ``;
         /* global textInterceptor */
         textInterceptor.setupObject = textInterceptor.populateObject(x, orgArg, textInterceptor.setupObject, false);
@@ -1683,7 +1677,7 @@ if (document.getElementById(`textOutput-content`)) {
           textInterceptor.drawObject = textInterceptor.clearVariables(textInterceptor.drawObject);
         }
       } else if (frameCount === 1 || frameCount % 20 === 0) {
-        textInterceptor.drawObject = textInterceptor.populateObject(x, orgArg, textInterceptor.drawObject, details, true);
+        textInterceptor.drawObject = textInterceptor.populateObject(x, orgArg, textInterceptor.drawObject, true);
         textInterceptor.getSummary(textInterceptor.setupObject, textInterceptor.drawObject, summary);
         textInterceptor.populateTable(
           table, textInterceptor.setupObject.objectArray.concat(textInterceptor.drawObject.objectArray));
@@ -1769,15 +1763,12 @@ GridInterceptor.prototype.populateTable = function(objectArray, documentPassed) 
   objectArray = [].slice.call(objectArray);
   objectArray.forEach((object, i) => {
     if(i<MAX_OBJECTS) {
-      const cellLoc = object.coordLoc.locY * that.noRows + object.coordLoc.locX;
+      const cellLoc = that.noRows;
       // add link in table
       const cellLink = documentPassed.createElement(`a`);
       cellLink.innerHTML += object.type;
       const objectId = `#object` + i;
       cellLink.setAttribute(`href`, objectId);
-      if (object.coordLoc.locY < that.noCols && object.coordLoc.locX < that.noRows && object.coordLoc.locY >= 0 && object.coordLoc.locX >= 0) {
-        documentPassed.getElementsByClassName(`gridOutput-cell-content`)[cellLoc].appendChild(cellLink);
-      }
     }
   });
 }

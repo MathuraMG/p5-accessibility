@@ -6,7 +6,7 @@ function TextEntity(Interceptor, shapeObject, textArgs, canvasX, canvasY) {
 
   this.populate = function(shapeObject, textArgs, canvasX, canvasY) {
     this.location = this.getLocation(shapeObject, textArgs, canvasX, canvasY);
-    this.coordLoc = this.canvasLocator(shapeObject, textArgs, canvasX, canvasY);
+    this.coordLoc = this.canvasLocator(shapeObject, textArgs, /*canvasX, canvasY*/);
   };
 
   this.getAttributes = function() {

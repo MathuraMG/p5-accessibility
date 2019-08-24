@@ -30,14 +30,12 @@ if (document.getElementById(`textOutput-content`)) {
       const element = document.getElementById(id);
       return element;
     };
-    const details = byID(`textOutput-content-details`);
     const summary = byID(`textOutput-content-summary`);
     const table = byID(`textOutput-content-table`);
     p5.prototype[x.name] = function() {
       /* global orgArg */
       orgArg = arguments;
       if (frameCount === 0) { // for setup
-        details.innerHTML = ``;
         summary.innerHTML = ``;
         /* global textInterceptor */
         textInterceptor.setupObject = textInterceptor.populateObject(x, orgArg, textInterceptor.setupObject, false);
@@ -48,7 +46,7 @@ if (document.getElementById(`textOutput-content`)) {
           textInterceptor.drawObject = textInterceptor.clearVariables(textInterceptor.drawObject);
         }
       } else if (frameCount === 1 || frameCount % 20 === 0) {
-        textInterceptor.drawObject = textInterceptor.populateObject(x, orgArg, textInterceptor.drawObject, details, true);
+        textInterceptor.drawObject = textInterceptor.populateObject(x, orgArg, textInterceptor.drawObject, true);
         textInterceptor.getSummary(textInterceptor.setupObject, textInterceptor.drawObject, summary);
         textInterceptor.populateTable(
           table, textInterceptor.setupObject.objectArray.concat(textInterceptor.drawObject.objectArray));

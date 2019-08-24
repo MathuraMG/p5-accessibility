@@ -11,7 +11,7 @@ function ShapeEntity(Interceptor, shapeObject, shapeArgs, canvasX, canvasY) {
 
   this.populate = function(shapeObject, arguments, canvasX, canvasY) {
     this.location = this.getLocation(shapeObject, arguments, canvasX, canvasY);
-    this.coordLoc = this.canvasLocator(shapeObject, arguments, canvasX, canvasY);
+    //this.coordLoc = this.canvasLocator(shapeObject, arguments, canvasX, canvasY);
     if(!shapeObject.name.localeCompare(`ellipse`) || !shapeObject.name.localeCompare(`rect`)  || !shapeObject.name.localeCompare(`triangle`) || !shapeObject.name.localeCompare(`quad`)) {
       this.areaAbs = this.getObjectArea(shapeObject.name, arguments);
       this.area = (this.getObjectArea(shapeObject.name, arguments) * 100 / (canvasX * canvasY)).toFixed(2) + `%`;
