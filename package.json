@@ -22,7 +22,7 @@
         "grunt-cli": "^1.2.0",
         "grunt-contrib-connect": "^1.0.2",
         "grunt-curl": "^2.5.1",
-        "jquery": "^3.4.1"
+        "jquery": "^3.5.0"
     },
     "devDependencies": {
         "eslint": "^5.0.1",
